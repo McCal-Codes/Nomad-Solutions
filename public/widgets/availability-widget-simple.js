@@ -163,6 +163,19 @@
     }
   `;
   
+  // Debug helpers
+  function isDebugEnabled(el) {
+    try {
+      if (el && el.getAttribute && el.getAttribute('data-debug') === 'true') return true;
+      if (typeof window !== 'undefined') {
+        if (window.NomadAvailabilityWidget && window.NomadAvailabilityWidget.debug === true) return true;
+        if (window.location && /nomadDebug=1/i.test(window.location.search)) return true;
+      }
+    } catch(_) {}
+    return false;
+  }
+  function dlog(el, msg) { if (isDebugEnabled(el)) { try { console.log('[NomadAvailability]', msg); } catch(_) {} } }
+  
   // Inject styles
   function injectStyles() {
     if (!document.getElementById('nomad-availability-widget-styles')) {
@@ -183,11 +196,37 @@
       { name: 'Toy Hauler 28ft', status: 'available' }
     ];
   }
+
+  // Build a sensible default API url based on script origin
+  function getDefaultApiUrl() {
+    try {
+      const scripts = document.getElementsByTagName('script');
+      for (let i = scripts.length - 1; i >= 0; i--) {
+        const s = scripts[i];
+        const src = s && s.getAttribute && s.getAttribute('src');
+        if (src && /availability-widget-simple\.js(\?.*)?$/i.test(src)) {
+          const a = document.createElement('a');
+          a.href = src; // resolve to absolute
+          const origin = a.origin;
+          const path = a.pathname || '';
+          // Try to keep repo subpath if present (replace /widgets/... with /api/availability)
+          if (/\/widgets\//i.test(path)) {
+            const apiPath = path.replace(/\/widgets\/.*$/i, '/api/availability');
+            return origin + apiPath;
+          }
+          return origin + '/api/availability';
+        }
+      }
+    } catch(_) {}
+    try { return (window.location ? window.location.origin : '') + '/api/availability'; } catch(_) {}
+    return '/api/availability';
+  }
   
   // Render widget
   function renderWidget(container, options) {
+    if (!container || container.getAttribute('data-nomad-widget-initialized') === 'true') return;
     const darkMode = options.darkMode || false;
-    const apiUrl = options.apiUrl || null;
+    const apiUrl = options.apiUrl || getDefaultApiUrl();
     
     // Create widget HTML
     const widgetDiv = document.createElement('div');
@@ -204,26 +243,38 @@
     `;
     
     container.appendChild(widgetDiv);
+    container.setAttribute('data-nomad-widget-initialized', 'true');
+    dlog(container, 'Availability widget container initialized');
     
     // Load data
     setTimeout(function() {
-      let data = getAvailabilityData();
-      
-      // If API URL is provided, fetch from there
-      if (apiUrl) {
-        fetch(apiUrl)
-          .then(function(res) { return res.json(); })
-          .then(function(json) {
-            data = json.availability || data;
-            displayData(widgetDiv, data);
-          })
-          .catch(function() {
-            displayData(widgetDiv, data);
-          });
-      } else {
-        displayData(widgetDiv, data);
-      }
-    }, 500);
+      let fallbackData = getAvailabilityData();
+      // Try fetch with timeout and graceful fallback
+      var controller = null;
+      var timedOut = false;
+      try { controller = new AbortController(); } catch(_) {}
+      var timer = setTimeout(function(){
+        timedOut = true;
+        try { controller && controller.abort(); } catch(_) {}
+      }, 5000);
+
+      fetch(apiUrl, controller ? { signal: controller.signal } : undefined)
+        .then(function(res) {
+          if (!res.ok) throw new Error('HTTP '+res.status);
+          return res.json();
+        })
+        .then(function(json) {
+          clearTimeout(timer);
+          var data = json && (json.availability || json.data || json) || fallbackData;
+          dlog(container, 'Fetched availability from '+apiUrl);
+          displayData(widgetDiv, data);
+        })
+        .catch(function(err) {
+          clearTimeout(timer);
+          dlog(container, 'Fetch failed ('+(err && err.message ? err.message : 'error')+') — using fallback data');
+          displayData(widgetDiv, fallbackData);
+        });
+    }, 200);
   }
   
   function displayData(widgetDiv, data) {
@@ -264,9 +315,65 @@
     
     // Also check for ID-based initialization
     const idContainer = document.getElementById('nomad-availability-widget');
-    if (idContainer && !idContainer.hasAttribute('data-nomad-widget')) {
+    if (idContainer && idContainer.getAttribute('data-nomad-widget-initialized') !== 'true') {
       renderWidget(idContainer, {});
     }
+
+    // Observe late-added containers (for builders injecting after load)
+    if (typeof MutationObserver !== 'undefined') {
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          mutation.addedNodes.forEach(function(node) {
+            if (!(node instanceof Element)) return;
+            if (node.matches && node.matches('[data-nomad-widget="availability"]') && node.getAttribute('data-nomad-widget-initialized') !== 'true') {
+              const opts = {
+                darkMode: node.getAttribute('data-dark-mode') === 'true',
+                apiUrl: node.getAttribute('data-api-url')
+              };
+              renderWidget(node, opts);
+            }
+            if (node.id === 'nomad-availability-widget' && node.getAttribute('data-nomad-widget-initialized') !== 'true') {
+              renderWidget(node, {});
+            }
+            const descAttr = node.querySelectorAll ? node.querySelectorAll('[data-nomad-widget="availability"]') : [];
+            descAttr.forEach(function(el){
+              if (el.getAttribute('data-nomad-widget-initialized') === 'true') return;
+              const opts = {
+                darkMode: el.getAttribute('data-dark-mode') === 'true',
+                apiUrl: el.getAttribute('data-api-url')
+              };
+              renderWidget(el, opts);
+            });
+            const descId = node.querySelector ? node.querySelector('#nomad-availability-widget') : null;
+            if (descId && descId.getAttribute('data-nomad-widget-initialized') !== 'true') {
+              renderWidget(descId, {});
+            }
+          });
+        });
+      });
+      observer.observe(document.documentElement || document.body, { childList: true, subtree: true });
+    }
+
+    // Final safety retries (in case of heavy async DOM building)
+    let tries = 0;
+    const maxTries = 8;
+    const timer = setInterval(function(){
+      tries++;
+      let did = false;
+      const reScan = document.querySelectorAll('[data-nomad-widget="availability"]');
+      reScan.forEach(function(el){
+        if (el.getAttribute('data-nomad-widget-initialized') === 'true') return;
+        const opts = {
+          darkMode: el.getAttribute('data-dark-mode') === 'true',
+          apiUrl: el.getAttribute('data-api-url')
+        };
+        renderWidget(el, opts);
+        did = true;
+      });
+      const idEl = document.getElementById('nomad-availability-widget');
+      if (idEl && idEl.getAttribute('data-nomad-widget-initialized') !== 'true') { renderWidget(idEl, {}); did = true; }
+      if (did || tries >= maxTries) clearInterval(timer);
+    }, 400);
   }
   
   // Expose global API
@@ -277,7 +384,9 @@
       if (container) {
         renderWidget(container, options || {});
       }
-    }
+    },
+    scan: function(){ init(); },
+    debug: false
   };
   
   // Auto-init on DOM ready
@@ -286,4 +395,5 @@
   } else {
     init();
   }
+  try { window.addEventListener('load', init); } catch(_) {}
 })();
