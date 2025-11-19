@@ -201,11 +201,19 @@
         const s = scripts[i];
         const src = s && s.getAttribute && s.getAttribute('src');
         if (src && /fleet-widget-simple\.js(\?.*)?$/i.test(src)) {
-          // If absolute URL provided, use its origin and replace /widgets/... with /images
+          // Resolve absolute and derive repo-aware base: replace /widgets/... with /images
           const a = document.createElement('a');
           a.href = src; // browser resolves to absolute
-          // Build base like: origin + '/images'
-          return a.origin + '/images';
+          const origin = a.origin; // e.g., https://username.github.io
+          const path = a.pathname || '';// e.g., /Repo/widgets/fleet-widget-simple.js
+          if (/\/widgets\//.test(path)) {
+            const basePath = path.replace(/\/widgets\/.*$/i, '/images'); // /Repo/images
+            return origin + basePath;
+          }
+          // fallback to sibling directory replacement using last slash
+          const idx = path.lastIndexOf('/');
+          const dir = idx >= 0 ? path.slice(0, idx) : '';
+          return origin + dir + '/images';
         }
       }
     } catch(_) {}
