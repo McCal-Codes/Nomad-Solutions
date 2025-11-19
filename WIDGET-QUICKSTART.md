@@ -1,88 +1,93 @@
-# Widget Quick Start 🚀
+# React Widget Quick Start 🚀
 
-Get your Nomad Solutions widgets embedded in 5 minutes!
+Build & embed the React (bundled) versions of Nomad Solutions widgets in under 5 minutes.
 
-## Step 1: Build the Widgets
+> Looking for zero‑build vanilla widgets? See `SIMPLE-WIDGETS-GUIDE.md` instead.
 
+## 1. Build the React Bundles
 ```bash
 npm install
 npm run build:widgets
 ```
-
-This creates three files in `public/widgets/`:
+Outputs (in `public/widgets/`):
 - `availability-widget.js`
 - `pricing-widget.js`
 - `rv-card-widget.js`
 
-## Step 2: Deploy Widget Files
+## 2. Deploy Bundles
+Upload the generated files to a public path (same filenames):
+```
+https://yourdomain.com/widgets/availability-widget.js
+https://yourdomain.com/widgets/pricing-widget.js
+https://yourdomain.com/widgets/rv-card-widget.js
+```
 
-Upload the widget files from `public/widgets/` to your production server. They should be accessible at:
-- `https://yourdomain.com/widgets/availability-widget.js`
-- `https://yourdomain.com/widgets/pricing-widget.js`
-- `https://yourdomain.com/widgets/rv-card-widget.js`
-
-## Step 3: Embed on Your Platform
-
-### Squarespace
-1. Edit your page
-2. Add a "Code Block"
-3. Paste this code:
+## 3. Embed (Data Attribute Pattern)
 ```html
 <div data-nomad-widget="availability"></div>
 <script src="https://yourdomain.com/widgets/availability-widget.js"></script>
 ```
-4. Save and publish
-
-### Wix
-1. Add an "Embed a Widget" element
-2. Paste the same code as above
-3. Update and publish
-
-### WordPress
-1. Add a "Custom HTML" block
-2. Paste the code
-3. Publish
-
-### Any Other Platform
-Just add the HTML code wherever you want the widget to appear!
-
-## Customization
-
-### Dark Mode
+Repeat for pricing & RV card:
 ```html
-<div data-nomad-widget="availability" data-dark-mode="true"></div>
+<div data-nomad-widget="pricing"></div>
+<div data-nomad-widget="rv-card"></div>
+<script src="https://yourdomain.com/widgets/pricing-widget.js"></script>
+<script src="https://yourdomain.com/widgets/rv-card-widget.js"></script>
 ```
 
-### Custom API URL
+## 4. Platform Notes
+| Platform | How | Notes |
+|----------|-----|-------|
+| Squarespace | Code Block | Scripts allowed; ensure HTTPS |
+| Wix | Embed Custom Code | Prefer bottom of page or custom element |
+| WordPress | Custom HTML block | Gutenberg block keeps markup intact |
+| Webflow | Embed component | Paste HTML + script tags |
+
+## 5. Customization Attributes
+| Attribute | Applies To | Purpose | Example |
+|-----------|-----------|---------|---------|
+| `data-dark-mode` | all widgets | Force dark theme | `data-dark-mode="true"` |
+| `data-api-url` | availability | Override availability endpoint | `data-api-url="https://api.example.com/availability"` |
+| `data-booking-url` | rv-card/pricing | Deep link to booking flow | `data-booking-url="/booking"` |
+
+Example combining attributes:
 ```html
-<div data-nomad-widget="availability" data-api-url="https://api.yourdomain.com/availability"></div>
+<div data-nomad-widget="availability"
+	data-dark-mode="true"
+	data-api-url="https://api.yourdomain.com/availability"
+></div>
+<script src="https://yourdomain.com/widgets/availability-widget.js"></script>
 ```
 
-### Multiple Widgets
+## 6. Multiple Widgets Best Practice
+Load each script once near the end of `<body>`:
 ```html
 <div data-nomad-widget="availability"></div>
 <div data-nomad-widget="pricing"></div>
 <div data-nomad-widget="rv-card"></div>
 
-<!-- Load scripts at bottom -->
 <script src="https://yourdomain.com/widgets/availability-widget.js"></script>
 <script src="https://yourdomain.com/widgets/pricing-widget.js"></script>
 <script src="https://yourdomain.com/widgets/rv-card-widget.js"></script>
 ```
 
-## Test Locally
+## 7. Local Testing
+Open `public/widget-examples.html` for a sandbox page that demonstrates all variants.
 
-Open `public/widget-examples.html` in your browser to see all widgets in action with example code.
+## 8. Troubleshooting
+| Issue | Check |
+|-------|-------|
+| Widget not rendering | Correct `data-nomad-widget` value? Console errors? Script loaded? |
+| Dark mode ignored | Attribute spelled correctly? Conflicting site CSS? |
+| API data missing | Network tab 200 response? CORS headers? Correct `data-api-url`? |
 
-## Full Documentation
+## 9. Advanced Integration
+You can manually initialize (future enhancement) or hydrate server output. For now use data attribute auto‑init pattern.
 
-See `docs/widget-embedding-guide.md` for:
-- Complete platform guides (Squarespace, Wix, WordPress, Webflow)
-- Advanced customization options
-- Custom data passing
-- Troubleshooting
-- API integration details
+## 10. Related Docs
+- Vanilla widgets: `SIMPLE-WIDGETS-GUIDE.md`
+- Full embedding & platform nuances: `docs/widget-embedding-guide.md`
+- Standards & performance: `docs/standards/` (start at `widget-reference.md`)
 
-## Need Help?
-
-Check the troubleshooting section in the full guide or contact support.
+---
+Keep bundle size lean. When adding dependencies, prefer pushing functionality into the simple widget instead if feasible.

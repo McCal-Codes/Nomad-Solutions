@@ -1,98 +1,149 @@
 ````markdown
 # Nomad Solutions — Burning Man RV Rentals
 
-A minimal, SEO-first Next.js site for an RV rental service focused on Burning Man. The UI is mobile-first, desert-inspired, dark/light mode capable, and built to expand with real booking APIs.
+[![ESLint](https://github.com/McCal-Codes/Nomad-Solutions/actions/workflows/eslint.yml/badge.svg)](https://github.com/McCal-Codes/Nomad-Solutions/actions/workflows/eslint.yml)
+[![Tests](https://github.com/McCal-Codes/Nomad-Solutions/actions/workflows/tests.yml/badge.svg)](https://github.com/McCal-Codes/Nomad-Solutions/actions/workflows/tests.yml)
+[![Lighthouse](https://github.com/McCal-Codes/Nomad-Solutions/actions/workflows/lighthouse.yml/badge.svg)](https://github.com/McCal-Codes/Nomad-Solutions/actions/workflows/lighthouse.yml)
+[![Bundle Size](https://github.com/McCal-Codes/Nomad-Solutions/actions/workflows/bundle-size.yml/badge.svg)](https://github.com/McCal-Codes/Nomad-Solutions/actions/workflows/bundle-size.yml)
 
-**✨ NEW: Pure HTML/CSS/JS Widgets for Wix, Squarespace, WordPress & More!**
+Minimal, SEO‑first Next.js platform powering an RV rental service focused on Burning Man. Mobile‑first, desert‑inspired design with dark/light mode, embeddable widgets, and room to grow into real booking + availability APIs.
 
-No build step required - just copy and paste!
+> API work roadmap: see `API.md` for planned booking & availability endpoints (currently mock data only). Test harness roadmap in `docs/TEST-HARNESS-PLAN.md`.
 
-## Structure
-- `src/app`: App Router routes for home, fleet, booking, FAQ, about, contact, and API placeholders.
-- `src/components`: Reusable UI elements (cards, pricing table, includes grid, gallery, theme controls, availability widget).
-- `src/widgets`: React-based widget versions (requires build step).
-- `public/widgets`: **Pure HTML/JS widgets** - ready to use immediately!
-- `public/landing-page.html`: Complete landing page demo.
-- `src/lib`: Data seeds for the fleet and availability API.
-- `docs`: Project guide, TODOs, SEO checklist, component reference, and widget embedding guide.
+> ✨ New: Zero‑build HTML/JS widgets for Wix, Squarespace, WordPress, Webflow & any static site. Just copy & paste.
 
-## Getting started
+## Table of Contents
+1. Overview
+2. Tech Stack & Scripts
+3. Directory Layout
+4. Quick Start (App)
+5. Widgets (Simple vs React)
+6. Embedding Examples
+7. Customization & API Hooks
+8. Documentation Map
+9. Contributing
+10. License
 
-### Development
+---
+## 1. Overview
+Nomad Solutions is split into two layers:
+1. A Next.js marketing + informational site (App Router) with fleet, pricing, booking placeholder, FAQ & contact.
+2. A widget system offered in two forms:
+	- Simple vanilla HTML/CSS/JS widgets (no build step, tiny footprint)
+	- React bundle widgets (heavier, but more extensible)
+
+## 2. Tech Stack & Scripts
+| Purpose | Tech |
+|---------|------|
+| Framework | Next.js 14 (App Router) |
+| UI | React 18, Tailwind CSS |
+| Bundling (widgets) | Webpack 5 |
+| Language | TypeScript |
+| Styling | CSS Modules + Tailwind utilities |
+
+Scripts:
+```bash
+npm install            # install dependencies
+npm run dev            # start Next.js dev server
+npm run build          # build Next.js app
+npm run build:widgets  # build React widget bundles (webpack)
+npm run start          # start production server
+npm run lint           # run ESLint
+```
+
+## 3. Directory Layout
+```
+src/app/              # App Router routes & API endpoints
+src/components/       # Reusable React components
+src/lib/              # Data seeds & utility modules
+src/widgets/          # React widget source (pre-bundle)
+public/widgets/       # Distributed widget bundles (simple + built React)
+public/landing-page.html  # Demo landing page with widgets
+public/widget-examples.html # Widget embedding showcase
+docs/                 # Guides, standards, SEO, widget embedding
+```
+
+## 4. Quick Start (App)
 ```bash
 npm install
 npm run dev
+# visit http://localhost:3000
 ```
 
-### View Landing Page
-Open `public/landing-page.html` in your browser to see the complete landing page with widgets.
+### Widget Previews
+- Open `public/demos/index.html` for individual widget preview pages
+- Open `public/widget-examples.html` for all widgets combined
+- Open `public/landing-page.html` for full marketing layout demo
 
-## 🎯 Embeddable Widgets (No Build Required!)
+## 5. Widgets (Simple vs React)
+| Variant | Location | Size (approx) | Build Needed | Best For |
+|---------|----------|---------------|--------------|----------|
+| availability-widget-simple.js | public/widgets | ~5KB | No | Instant embed |
+| fleet-widget-simple.js        | public/widgets | ~8KB | No | Fleet showcase |
+| availability-widget.js        | public/widgets | ~142KB | Yes (`build:widgets`) | Extensible React |
+| pricing-widget.js             | public/widgets | ~142KB | Yes | Dynamic pricing |
+| rv-card-widget.js             | public/widgets | ~142KB | Yes | Rich vehicle cards |
 
-### Simple Copy & Paste Method
+### When to choose Simple
+Use simple widgets for speed, minimal footprint, and broad platform compatibility.
 
-Add this to **any** website (Wix, Squarespace, WordPress, etc.):
+### When to choose React
+Use React widgets when you need advanced stateful features, modular extension, or integration with a larger React application.
 
+## 6. Embedding Examples (Simple Copy & Paste)
 ```html
-<!-- Availability Widget -->
+<!-- Availability (simple) -->
 <div id="nomad-availability-widget"></div>
 <script src="https://yourdomain.com/widgets/availability-widget-simple.js"></script>
 
-<!-- Fleet Widget -->
+<!-- Fleet (simple) -->
 <div id="nomad-fleet-widget"></div>
 <script src="https://yourdomain.com/widgets/fleet-widget-simple.js"></script>
 ```
+React bundle version (after `npm run build:widgets`):
+```html
+<div data-nomad-widget="availability"></div>
+<script src="https://yourdomain.com/widgets/availability-widget.js"></script>
+```
 
-That's it! No configuration, no build step, no external dependencies.
+## 7. Customization & API Hooks
+All widgets accept data attributes for configuration:
+```html
+<div data-nomad-widget="availability"
+	  data-dark-mode="true"
+	  data-api-url="https://api.yourdomain.com/availability"
+></div>
+```
+Planned enhancements: booking endpoint integration, availability polling, SSR hydration for React variants.
 
-### Available Widgets
+## 8. Documentation Map
+| Guide | Purpose |
+|-------|---------|
+| `SIMPLE-WIDGETS-GUIDE.md` | Vanilla widget embedding & customization |
+| `WIDGET-QUICKSTART.md` | React widget build + embed workflow |
+| `docs/widget-embedding-guide.md` | Full platform & troubleshooting reference |
+| `docs/components-guide.md` | Component inventory for building pages |
+| `docs/standards/README.md` | Development & performance standards |
+| `docs/seo-checklist.md` | SEO implementation checklist |
 
-**Pure HTML/CSS/JavaScript** (in `public/widgets/`):
-- `availability-widget-simple.js` - Fleet availability status (~5KB)
-- `fleet-widget-simple.js` - Full fleet showcase (~8KB)
+## 9. Contributing
+See `CONTRIBUTING.md` for branching, commit style, code review flow, and documentation rules.
+Quick rules:
+1. Keep widgets tiny & dependency‑free (simple versions).
+2. Preserve accessibility (focus order, ARIA labels, color contrast).
+3. Favor data attributes over inline scripts for configuration.
+4. Update relevant guide when adding/removing a widget.
 
-**React-based** (requires `npm run build:widgets`):
-- `availability-widget.js` - React version (~142KB)
-- `pricing-widget.js` - React version (~142KB)
-- `rv-card-widget.js` - React version (~142KB)
+## 10. API & Testing Roadmap
+See `API.md` for planned REST endpoints (`/api/availability`, `/api/booking/quote`, `/api/booking/confirm`). A lightweight widget initialization test harness is planned (Jest + DOM testing) — outline in `docs/TEST-HARNESS-PLAN.md`.
 
-## 📖 Documentation
+## 11. License
+Licensed under the terms in `LICENSE`.
 
-- **Quick Start**: `SIMPLE-WIDGETS-GUIDE.md` - For Wix, Squarespace, etc.
-- **React Widgets**: `WIDGET-QUICKSTART.md` - If you prefer React
-- **Full Guide**: `docs/widget-embedding-guide.md` - Complete reference
-- **Landing Page**: Open `public/landing-page.html` to see it all in action
+---
+### At a Glance
+✅ Zero‑config simple widgets • ✅ Responsive & dark‑mode ready • ✅ API extensible • ✅ Platform agnostic
 
-## 🚀 Deployment
-
-### For Simple Widgets (Recommended)
-1. Upload `public/widgets/*-simple.js` to your server
-2. Update script URLs in your HTML
-3. Embed anywhere!
-
-### For React Widgets
-1. Run `npm run build:widgets`
-2. Upload `public/widgets/*.js` to your server
-3. Embed using the widget guide
-
-## 🎨 Features
-
-- ✅ **Zero config** - Works immediately
-- ✅ **Tiny file size** - 5-8KB per widget (simple version)
-- ✅ **Responsive** - Mobile, tablet, desktop
-- ✅ **Dark mode** - Built-in support
-- ✅ **API ready** - Connect your booking system
-- ✅ **Platform agnostic** - Works everywhere
-
-## 🌐 Perfect For
-
-- Wix websites
-- Squarespace sites
-- WordPress blogs
-- Webflow projects
-- Custom HTML sites
-- Any platform that supports HTML/JavaScript
-
-For more details, open `docs/README.md` or `SIMPLE-WIDGETS-GUIDE.md`.
+For deeper embedding details jump to `SIMPLE-WIDGETS-GUIDE.md` or `docs/widget-embedding-guide.md`.
 
 ````

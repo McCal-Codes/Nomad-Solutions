@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Availability Widget v1.0.0</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .preview-container {
+      max-width: 900px;
+      width: 100%;
+    }
+    
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 40px;
+    }
+    
+    .header h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+    
+    .header .version {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .header p {
+      opacity: 0.9;
+      font-size: 16px;
+    }
+    
+    .widget-wrapper {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      margin-bottom: 32px;
+    }
+    
+    .controls {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+    
+    .btn-primary {
+      background: #4a4a4a;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #5a5a5a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+    
+    .btn-dark {
+      background: #1a1a1a;
+      color: white;
+    }
+    
+    .btn-dark:hover {
+      background: #333;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+    
+    .version-info {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+      color: white;
+    }
+    
+    .version-info h3 {
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+    
+    .version-info ul {
+      list-style: none;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    
+    .version-info li {
+      padding: 4px 0;
+    }
+    
+    .version-info li:before {
+      content: "• ";
+      margin-right: 8px;
+    }
+    
+    .code-section {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 32px;
+    }
+    
+    .code-section h3 {
+      color: white;
+      margin-bottom: 16px;
+      font-size: 18px;
+    }
+    
+    .code-block {
+      background: #1a1a1a;
+      color: #10b981;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    
+    .footer {
+      text-align: center;
+      color: white;
+      opacity: 0.8;
+      font-size: 14px;
+    }
+    
+    .dark-mode-wrapper {
+      background: #1a1a1a;
+      transition: background 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-container">
+    <div class="header">
+      <span class="version">v1.0.0</span>
+      <h1>🗓️ Availability Widget</h1>
+      <p>Real-time fleet availability status</p>
+    </div>
+    
+    <div class="version-info">
+      <h3>Version 1.0.0 — Initial Release</h3>
+      <ul>
+        <li>Auto-initialization via data attributes</li>
+        <li>Dark mode support</li>
+        <li>Mock data with API fallback</li>
+        <li>Responsive design</li>
+        <li>5KB bundle size</li>
+      </ul>
+    </div>
+    
+    <div class="controls">
+      <button class="btn btn-primary" onclick="toggleDarkMode()">🌓 Toggle Dark Mode</button>
+      <button class="btn btn-dark" onclick="refreshWidget()">🔄 Refresh Widget</button>
+    </div>
+    
+    <div id="widget-container" class="widget-wrapper">
+      <div id="nomad-availability-widget"></div>
+    </div>
+    
+    <div class="code-section">
+      <h3>📋 Embed Code (Copy & Paste)</h3>
+      <div class="code-block">
+&lt;!-- Availability Widget v1.0.0 --&gt;<br>
+&lt;div id="nomad-availability-widget"&gt;&lt;/div&gt;<br>
+&lt;script src="https://yourdomain.com/widgets/availability-widget-simple.js"&gt;&lt;/script&gt;<br>
+<br>
+&lt;!-- Or use data attributes --&gt;<br>
+&lt;div data-nomad-widget="availability" data-dark-mode="true"&gt;&lt;/div&gt;<br>
+&lt;script src="https://yourdomain.com/widgets/availability-widget-simple.js"&gt;&lt;/script&gt;
+      </div>
+    </div>
+    
+    <div class="footer">
+      <p>Nomad Solutions • Burning Man RV Rentals</p>
+    </div>
+  </div>
+  
+  <script src="../../widgets/availability/v1.0.0/availability-widget-simple.js"></script>
+  
+  <script>
+    let isDarkMode = false;
+    
+    function toggleDarkMode() {
+      isDarkMode = !isDarkMode;
+      const container = document.getElementById('widget-container');
+      const widget = document.getElementById('nomad-availability-widget');
+      
+      if (isDarkMode) {
+        container.classList.add('dark-mode-wrapper');
+      } else {
+        container.classList.remove('dark-mode-wrapper');
+      }
+      
+      widget.innerHTML = '';
+      widget.removeAttribute('data-nomad-widget-initialized');
+      widget.setAttribute('data-dark-mode', isDarkMode ? 'true' : 'false');
+      
+      if (window.NomadAvailabilityWidget) {
+        window.NomadAvailabilityWidget.render('nomad-availability-widget', {
+          darkMode: isDarkMode
+        });
+      }
+    }
+    
+    function refreshWidget() {
+      const widget = document.getElementById('nomad-availability-widget');
+      widget.innerHTML = '';
+      widget.removeAttribute('data-nomad-widget-initialized');
+      
+      if (window.NomadAvailabilityWidget) {
+        window.NomadAvailabilityWidget.render('nomad-availability-widget', {
+          darkMode: isDarkMode
+        });
+      }
+    }
+  </script>
+</body>
+</html>

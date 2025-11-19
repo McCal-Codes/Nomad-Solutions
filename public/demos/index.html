@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget Previews Index</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #333333 0%, #1a1a1a 100%);
+      min-height: 100vh;
+      padding: 60px 20px;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 60px;
+    }
+    
+    .header h1 {
+      font-size: 48px;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header p {
+      font-size: 20px;
+      opacity: 0.9;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      margin-bottom: 60px;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+    }
+    
+    .card-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    
+    .card h2 {
+      font-size: 24px;
+      margin-bottom: 12px;
+      color: #1a1a1a;
+    }
+    
+    .card p {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    
+    .card .version {
+      display: inline-block;
+      background: #f0f0f0;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #666;
+    }
+    
+    .card .link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #4a4a4a;
+      font-weight: 600;
+      margin-top: 16px;
+    }
+    
+    .all-widgets {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+    }
+    
+    .all-widgets h3 {
+      color: white;
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+    
+    .all-widgets p {
+      color: white;
+      opacity: 0.9;
+      margin-bottom: 24px;
+      font-size: 16px;
+    }
+    
+    .btn {
+      display: inline-block;
+      background: white;
+      color: #2a2a2a;
+      padding: 16px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
+    }
+    
+    .footer {
+      text-align: center;
+      color: white;
+      opacity: 0.7;
+      margin-top: 60px;
+      font-size: 14px;
+    }
+    .version-controls {
+      display: flex;
+      justify-content: center;
+      margin: 0 auto 24px auto;
+      gap: 12px;
+    }
+    .version-controls label {
+      color: white;
+      font-weight: 600;
+    }
+    .version-select {
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🏜️ Widget Previews</h1>
+      <p>Individual preview pages for each Nomad Solutions widget</p>
+    </div>
+    <div class="version-controls">
+      <label for="version">Version:</label>
+      <select id="version" class="version-select">
+        <option value="v1.0.0" selected>v1.0.0</option>
+      </select>
+    </div>
+    
+    <div class="grid">
+      <a href="availability-widget/v1.0.0.html" class="card">
+        <div class="card-icon">🗓️</div>
+        <h2>Availability Widget</h2>
+        <p>Real-time fleet availability status with mock data fallback and API integration ready.</p>
+        <span class="version">v1.0.0</span>
+        <div class="link">View Preview →</div>
+      </a>
+      
+      <a href="fleet-widget/v1.0.0.html" class="card">
+        <div class="card-icon">🚐</div>
+        <h2>Fleet Widget</h2>
+        <p>Full fleet showcase with vehicle cards, specs, pricing, and booking links.</p>
+        <span class="version">v1.0.0</span>
+        <div class="link">View Preview →</div>
+      </a>
+      
+      <a href="../widget-examples.html" class="card">
+        <div class="card-icon">⚡</div>
+        <h2>All Widgets Combined</h2>
+        <p>See all widgets together with React versions, dark mode, and complete embed examples.</p>
+        <span class="version">Master Preview</span>
+        <div class="link">View All →</div>
+      </a>
+    </div>
+    
+    <div class="all-widgets">
+      <h3>📦 Widget Files Location</h3>
+      <p>All built widget files are in <code style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 4px;">/public/widgets/</code></p>
+      <a href="../landing-page.html" class="btn">View Full Landing Page →</a>
+    </div>
+    
+    <div class="footer">
+      <p>Nomad Solutions • Burning Man RV Rentals</p>
+      <p style="margin-top: 8px;">Version previews track widget lifecycle & testing</p>
+    </div>
+  </div>
+  <script>
+    (function(){
+      const select = document.getElementById('version');
+      const avail = document.querySelector('a.card[href^="availability-widget/"]');
+      const fleet = document.querySelector('a.card[href^="fleet-widget/"]');
+      function updateLinks(){
+        const v = select.value;
+        if (avail) avail.setAttribute('href', `availability-widget/${v}.html`);
+        if (fleet) fleet.setAttribute('href', `fleet-widget/${v}.html`);
+      }
+      select.addEventListener('change', updateLinks);
+    })();
+  </script>
+</body>
+</html>
