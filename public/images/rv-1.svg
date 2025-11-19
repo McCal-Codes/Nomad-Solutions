@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title id="title">Nomad RV Placeholder 1</title>
+  <desc id="desc">Abstract placeholder image for an RV card</desc>
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="600" fill="url(#g1)"/>
+  <g fill="rgba(0,0,0,0.25)">
+    <circle cx="150" cy="520" r="40"/>
+    <rect x="200" y="370" width="700" height="130" rx="16"/>
+    <rect x="230" y="310" width="240" height="60" rx="10"/>
+    <rect x="500" y="310" width="120" height="60" rx="10"/>
+  </g>
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif" font-size="48" fill="#111827" opacity="0.8">Nomad RV</text>
+</svg>
