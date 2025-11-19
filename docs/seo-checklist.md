@@ -6,4 +6,4 @@
 - [x] JSON-LD planned for LocalBusiness + VehicleRental
 - [x] Optimized images via `next/image` remote patterns
 - [x] Semantic headings and accessible buttons/links
-- [ ] TODO: Add sitemap + robots.txt
+- [x] Sitemap + robots.txt routes added in `src/app`
