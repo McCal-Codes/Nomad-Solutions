@@ -5,6 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nomad Solutions – Burning Man RV Rentals • Reno, NV</title>
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+    }
+
         /* Top contact bar */
         .top-contact {
           background: #0f172a; /* slate-900 */
@@ -34,9 +58,12 @@
     
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      line-height: 1.6;
-      color: #1a1a1a;
+      line-height: 1.65;
+      color: #18181b;
       background: #fafaf9;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     
     /* Header */
@@ -79,35 +106,53 @@
       color: white;
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.3s;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #f59e0b;
+      transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover::after {
+      width: 100%;
     }
     
     .nav-links a:hover {
-      color: #d97706;
+      color: #f59e0b;
     }
     
     /* Hero Section */
     .hero {
       background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
       color: white;
-      padding: 100px 20px;
+      padding: 120px 20px 100px;
       text-align: center;
     }
     
     .hero h1 {
-      font-size: 52px;
+      font-size: clamp(36px, 5vw, 56px);
       font-weight: 800;
-      margin-bottom: 20px;
-      line-height: 1.2;
+      margin-bottom: 24px;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
     }
     
     .hero p {
-      font-size: 20px;
-      margin-bottom: 40px;
+      font-size: clamp(18px, 2.5vw, 22px);
+      margin-bottom: 48px;
       opacity: 0.95;
-      max-width: 700px;
+      max-width: 720px;
       margin-left: auto;
       margin-right: auto;
+      line-height: 1.6;
     }
 
     .hero .sub-badge {
@@ -115,10 +160,12 @@
       align-items: center;
       gap: 8px;
       background: rgba(255,255,255,0.15);
-      padding: 8px 14px;
+      padding: 10px 16px;
       border-radius: 999px;
-      font-size: 13px;
-      margin-bottom: 16px;
+      font-size: 14px;
+      margin-bottom: 20px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
     }
     
     .cta-buttons {
@@ -126,223 +173,277 @@
       gap: 16px;
       justify-content: center;
       flex-wrap: wrap;
+      margin-top: 8px;
     }
     
     .btn {
-      padding: 16px 32px;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: 8px;
+      padding: 16px 36px;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 10px;
       text-decoration: none;
-      transition: all 0.3s;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
       border: none;
       display: inline-block;
+      letter-spacing: -0.01em;
     }
     
     .btn-primary {
       background: white;
-      color: #1a1a1a;
+      color: #18181b;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     
     .btn-primary:hover {
-      background: #f5f5f5;
+      background: #fafafa;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
     }
     
     .btn-secondary {
       background: transparent;
       color: white;
-      border: 2px solid white;
+      border: 2px solid rgba(255,255,255,0.9);
     }
     
     .btn-secondary:hover {
-      background: white;
-      color: #1a1a1a;
+      background: rgba(255,255,255,0.15);
+      border-color: white;
     }
     
     /* Container */
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 80px 20px;
+      padding: 96px 24px;
     }
     
     .section-title {
       text-align: center;
-      font-size: 40px;
-      font-weight: 700;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 800;
       margin-bottom: 16px;
-      color: #1a1a1a;
+      color: #18181b;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
     }
     
     .section-subtitle {
       text-align: center;
-      font-size: 18px;
-      color: #666;
-      margin-bottom: 60px;
-      max-width: 700px;
+      font-size: clamp(16px, 2vw, 20px);
+      color: #52525b;
+      margin-bottom: 64px;
+      max-width: 720px;
       margin-left: auto;
       margin-right: auto;
+      line-height: 1.7;
     }
     
     /* Features */
     .features {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 32px;
-      margin-bottom: 80px;
+      gap: 28px;
+      margin-bottom: 48px;
     }
     
     .feature {
       background: white;
-      padding: 32px;
+      padding: 36px;
       border-radius: 16px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-      transition: all 0.3s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(0,0,0,0.04);
     }
     
     .feature:hover {
       transform: translateY(-4px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.12);
     }
     
     .feature-icon {
       font-size: 48px;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
+      line-height: 1;
     }
     
     .feature h3 {
       font-size: 22px;
+      font-weight: 700;
       margin-bottom: 12px;
-      color: #1a1a1a;
+      color: #18181b;
+      letter-spacing: -0.01em;
     }
     
     .feature p {
-      color: #666;
+      color: #52525b;
       line-height: 1.7;
+      font-size: 16px;
     }
 
     /* Services cards */
     .services { 
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
     }
     .service-card {
       background: white;
       border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.06);
-      border: 1px solid rgba(0,0,0,0.06);
-      transition: transform .2s ease, box-shadow .2s ease;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.04);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .service-card:hover { 
-      transform: translateY(-3px);
-      box-shadow: 0 8px 14px rgba(0,0,0,0.1);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.12);
     }
-    .service-icon { width: 40px; height: 40px; border-radius: 8px; overflow: hidden; display: inline-block; }
-    .service-icon img { width: 40px; height: 40px; display: block; }
-    .service-card h3 { margin: 12px 0 8px; }
-    .service-card p { color: #555; margin-bottom: 14px; }
-    .service-link { color: #b45309; font-weight: 600; text-decoration: none; }
-    .service-link:hover { text-decoration: underline; }
+    .service-icon { 
+      width: 48px; 
+      height: 48px; 
+      border-radius: 10px; 
+      overflow: hidden; 
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+    .service-icon img { width: 48px; height: 48px; display: block; }
+    .service-card h3 { 
+      margin: 16px 0 12px; 
+      font-size: 22px;
+      font-weight: 700;
+      color: #18181b;
+      letter-spacing: -0.01em;
+    }
+    .service-card p { 
+      color: #52525b; 
+      margin-bottom: 16px;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+    .service-link { 
+      color: #b45309; 
+      font-weight: 600; 
+      text-decoration: none;
+      font-size: 15px;
+      transition: color 0.2s;
+    }
+    .service-link:hover { 
+      color: #d97706;
+      text-decoration: underline; 
+    }
     
     /* Widget Section */
     .widget-section {
       background: white;
-      padding: 80px 20px;
+      padding: 96px 24px;
     }
     
     /* Stats */
     .stats {
       background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
       color: white;
-      padding: 80px 20px;
+      padding: 96px 24px;
       text-align: center;
     }
     
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 48px;
-      max-width: 1000px;
+      gap: 56px;
+      max-width: 1100px;
       margin: 0 auto;
     }
     
     .stat-item {
-      padding: 20px;
+      padding: 24px;
     }
     
     .stat-number {
-      font-size: 48px;
-      font-weight: 800;
-      color: #d97706;
-      margin-bottom: 8px;
+      font-size: clamp(42px, 5vw, 56px);
+      font-weight: 900;
+      color: #f59e0b;
+      margin-bottom: 12px;
+      line-height: 1;
+      letter-spacing: -0.02em;
     }
     
     .stat-label {
-      font-size: 16px;
-      opacity: 0.9;
+      font-size: 17px;
+      opacity: 0.92;
+      font-weight: 500;
     }
     
     /* Testimonials */
     .testimonials {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 32px;
+      gap: 28px;
     }
     
     .testimonial {
       background: white;
-      padding: 32px;
+      padding: 36px;
       border-radius: 16px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.04);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .testimonial:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
     }
     
     .testimonial-text {
-      font-size: 16px;
-      color: #444;
-      margin-bottom: 20px;
-      line-height: 1.7;
+      font-size: 17px;
+      color: #3f3f46;
+      margin-bottom: 24px;
+      line-height: 1.75;
       font-style: italic;
     }
     
     .testimonial-author {
-      font-weight: 600;
-      color: #1a1a1a;
+      font-weight: 700;
+      color: #18181b;
+      font-size: 16px;
     }
     
     .testimonial-role {
-      font-size: 14px;
-      color: #666;
+      font-size: 15px;
+      color: #71717a;
+      margin-top: 4px;
     }
     
     /* CTA Section */
     .cta-section {
       background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
       color: white;
-      padding: 100px 20px;
+      padding: 120px 24px;
       text-align: center;
     }
     
     .cta-section h2 {
-      font-size: 44px;
-      margin-bottom: 20px;
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 800;
+      margin-bottom: 24px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
     }
     
     .cta-section p {
-      font-size: 20px;
-      margin-bottom: 40px;
+      font-size: clamp(18px, 2.5vw, 22px);
+      margin-bottom: 48px;
       opacity: 0.95;
+      line-height: 1.6;
     }
     
     /* Footer */
     footer {
       background: #1a1a1a;
       color: white;
-      padding: 60px 20px 20px;
+      padding: 80px 24px 24px;
     }
     
     .footer-content {
@@ -350,13 +451,22 @@
       margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 48px;
-      margin-bottom: 40px;
+      gap: 56px;
+      margin-bottom: 48px;
     }
     
     .footer-section h3 {
-      margin-bottom: 16px;
-      color: #d97706;
+      margin-bottom: 20px;
+      color: #f59e0b;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .footer-section p {
+      line-height: 1.7;
+      color: #d1d5db;
+      font-size: 15px;
     }
     
     .footer-section ul {
@@ -364,13 +474,14 @@
     }
     
     .footer-section li {
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
     
     .footer-section a {
-      color: #ccc;
+      color: #d1d5db;
       text-decoration: none;
-      transition: color 0.3s;
+      transition: color 0.2s;
+      font-size: 15px;
     }
     
     .footer-section a:hover {
@@ -379,30 +490,74 @@
     
     .footer-bottom {
       text-align: center;
-      padding-top: 20px;
+      padding-top: 24px;
       border-top: 1px solid #333;
-      color: #999;
+      color: #a1a1aa;
+      font-size: 14px;
     }
 
     /* Newsletter */
     .newsletter {
       background: #0b1220;
       color: #e5e7eb;
-      padding: 60px 20px;
+      padding: 96px 24px;
     }
-    .newsletter .wrap { max-width: 900px; margin: 0 auto; text-align: center; }
-    .newsletter h3 { font-size: 28px; margin-bottom: 10px; }
-    .newsletter p { color: #a1a1aa; margin-bottom: 20px; }
-    .newsletter form { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px; }
+    .newsletter .wrap { max-width: 920px; margin: 0 auto; text-align: center; }
+    .newsletter h3 { 
+      font-size: clamp(28px, 4vw, 36px); 
+      margin-bottom: 12px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .newsletter p { 
+      color: #a1a1aa; 
+      margin-bottom: 32px;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+    .newsletter form { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr 1fr auto; 
+      gap: 12px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
     .newsletter input, .newsletter select {
-      padding: 12px 14px;
-      border-radius: 8px;
+      padding: 14px 16px;
+      border-radius: 10px;
       border: 1px solid #334155;
       background: #111827;
       color: #e5e7eb;
+      font-size: 16px;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .newsletter button { padding: 12px 18px; border-radius: 8px; border: 0; font-weight: 700; background: #f59e0b; color: #111827; }
-    .newsletter .success { margin-top: 14px; color: #34d399; display: none; }
+    .newsletter input:focus, .newsletter select:focus {
+      outline: none;
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+    }
+    .newsletter button { 
+      padding: 14px 24px; 
+      border-radius: 10px; 
+      border: 0; 
+      font-weight: 700; 
+      background: #f59e0b; 
+      color: #111827;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .newsletter button:hover {
+      background: #fbbf24;
+      transform: translateY(-1px);
+    }
+    .newsletter .success { 
+      margin-top: 20px; 
+      color: #34d399; 
+      display: none;
+      font-weight: 600;
+      font-size: 16px;
+    }
     @media (max-width: 900px) { .newsletter form { grid-template-columns: 1fr; } }
 
     /* Location strip */
@@ -410,49 +565,106 @@
       background: #fff7ed;
       color: #7c2d12;
       text-align: center;
-      padding: 10px 20px;
+      padding: 14px 24px;
       border-top: 1px solid #fed7aa;
       border-bottom: 1px solid #fed7aa;
       font-weight: 600;
+      font-size: 15px;
+      letter-spacing: 0.01em;
     }
     
     /* Responsive */
     @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 36px;
+      .hero {
+        padding: 80px 20px 60px;
       }
       
-      .hero p {
-        font-size: 18px;
+      .container {
+        padding: 64px 20px;
+      }
+
+      .widget-section {
+        padding: 64px 20px;
+      }
+
+      .stats {
+        padding: 64px 20px;
+      }
+
+      .cta-section {
+        padding: 80px 20px;
+      }
+
+      .newsletter {
+        padding: 64px 20px;
+      }
+
+      .footer-content {
+        gap: 40px;
       }
       
       .nav-links {
         display: none;
       }
       
-      .section-title {
-        font-size: 32px;
+      .features, .services, .testimonials {
+        gap: 20px;
+      }
+
+      .stats-grid {
+        gap: 40px;
+      }
+
+      .feature, .service-card, .testimonial {
+        padding: 28px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 60px 16px 48px;
+      }
+
+      .container {
+        padding: 48px 16px;
+      }
+
+      .btn {
+        padding: 14px 28px;
+        font-size: 16px;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .cta-buttons .btn {
+        width: 100%;
       }
     }
   </style>
 </head>
 <body>
   <!-- Top Contact Bar -->
-  <div class="top-contact" aria-label="contact">
+  <div class="top-contact" role="banner" aria-label="Contact information">
     <div class="bar">
       <span>Reno, NV • Serving Black Rock City and beyond</span>
       <span>
-        <a href="tel:+17753998621" aria-label="Call Nomad Solutions">(775) 399-8621</a>
+        <a href="tel:+17753998621" aria-label="Call Nomad Solutions at 775-399-8621">(775) 399-8621</a>
         &nbsp;•&nbsp;
-        <a href="mailto:hello@nomadsols.com" aria-label="Email Nomad Solutions">hello@nomadsols.com</a>
+        <a href="mailto:hello@nomadsols.com" aria-label="Email Nomad Solutions at hello@nomadsols.com">hello@nomadsols.com</a>
       </span>
     </div>
   </div>
 
   <!-- Header -->
-  <header>
-    <nav>
-      <a href="/" class="logo">🏜️ Nomad Solutions</a>
+  <header role="navigation">
+    <nav aria-label="Main navigation">
+      <a href="/" class="logo" aria-label="Nomad Solutions home">🏜️ Nomad Solutions</a>
       <ul class="nav-links">
         <li><a href="#fleet">Fleet</a></li>
         <li><a href="#features">Features</a></li>
@@ -463,13 +675,13 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="hero" id="about">
-    <div class="sub-badge">Nomad with us • Reno, Nevada</div>
+  <section class="hero" id="about" role="main">
+    <div class="sub-badge" role="text">Nomad with us • Reno, Nevada</div>
     <h1>Playa‑Ready RV Rentals for Burning Man</h1>
     <p>Premium, dust‑proofed motorhomes and trailers engineered for Black Rock City. Delivered with power, water, and 24/7 on‑playa support.</p>
     <div class="cta-buttons">
-      <a href="#fleet" class="btn btn-primary">View Our Fleet</a>
-      <a href="#availability" class="btn btn-secondary">Check Availability</a>
+      <a href="#fleet" class="btn btn-primary" aria-label="View our RV fleet">View Our Fleet</a>
+      <a href="#availability" class="btn btn-secondary" aria-label="Check RV availability">Check Availability</a>
     </div>
   </section>
 
@@ -480,37 +692,37 @@
     
     <div class="features" id="features">
       <div class="feature">
-        <div class="feature-icon">🛡️</div>
+        <div class="feature-icon" role="img" aria-label="Shield icon">🛡️</div>
         <h3>Playa-Ready</h3>
         <p>Comprehensive dust-proofing, sealed cabinets, filtered air systems. Your RV arrives ready for the harshest conditions.</p>
       </div>
       
       <div class="feature">
-        <div class="feature-icon">❄️</div>
+        <div class="feature-icon" role="img" aria-label="Snowflake icon">❄️</div>
         <h3>Premium AC</h3>
         <p>Multi-zone climate control keeps you comfortable during 100°F+ days. Generator included with every rental.</p>
       </div>
       
       <div class="feature">
-        <div class="feature-icon">💧</div>
+        <div class="feature-icon" role="img" aria-label="Water droplet icon">💧</div>
         <h3>Ample Water</h3>
         <p>40-100 gallon fresh water tanks. Never worry about running out during your burn.</p>
       </div>
       
       <div class="feature">
-        <div class="feature-icon">🔧</div>
+        <div class="feature-icon" role="img" aria-label="Wrench icon">🔧</div>
         <h3>24/7 Support</h3>
         <p>On-call support during gate open hours. Pre-event walkthrough and maintenance checks included.</p>
       </div>
       
       <div class="feature">
-        <div class="feature-icon">📍</div>
+        <div class="feature-icon" role="img" aria-label="Location pin icon">📍</div>
         <h3>Convenient Pickup</h3>
         <p>Reno and Las Vegas locations. Easy pickup and drop-off process with flexible scheduling.</p>
       </div>
       
       <div class="feature">
-        <div class="feature-icon">✅</div>
+        <div class="feature-icon" role="img" aria-label="Checkmark icon">✅</div>
         <h3>No Hidden Fees</h3>
         <p>Transparent pricing with everything included. What you see is what you pay.</p>
       </div>
@@ -526,22 +738,22 @@
     <p class="section-subtitle">From wheels to watts, we help you build a comfortable, resilient camp.</p>
     <div class="services">
       <div class="service-card">
-        <span class="service-icon"><img src="images/services/rv.svg" alt="RV icon"></span>
+        <span class="service-icon"><img src="images/services/rv.svg" alt="RV rental service icon with orange gradient"></span>
         <h3>Playa‑Ready RV Rentals</h3>
         <p>Class A, B, and C motorhomes plus travel trailers—dust‑sealed, serviced, and delivered. Power and water options included.</p>
-        <a class="service-link" href="#fleet">Explore fleet →</a>
+        <a class="service-link" href="#fleet" aria-label="Explore our RV fleet">Explore fleet →</a>
       </div>
       <div class="service-card">
-        <span class="service-icon"><img src="images/services/power.svg" alt="Power icon"></span>
+        <span class="service-icon"><img src="images/services/power.svg" alt="Power and generator service icon with blue gradient"></span>
         <h3>Power & Generators</h3>
         <p>Quiet, reliable generators and fuel management for AC and essentials. Setup, monitoring, and best‑practice guidance.</p>
-        <a class="service-link" href="#contact">Request power quote →</a>
+        <a class="service-link" href="#contact" aria-label="Request power quote">Request power quote →</a>
       </div>
       <div class="service-card">
-        <span class="service-icon"><img src="images/services/housing.svg" alt="Housing icon"></span>
+        <span class="service-icon"><img src="images/services/housing.svg" alt="Housing and hauling service icon with green gradient"></span>
         <h3>Housing & Hauling</h3>
         <p>Temporary housing solutions and safe transport for gear and structures. Options for pre‑event staging and teardown.</p>
-        <a class="service-link" href="#contact">Get a hauling estimate →</a>
+        <a class="service-link" href="#contact" aria-label="Get hauling estimate">Get a hauling estimate →</a>
       </div>
     </div>
   </section>
@@ -614,7 +826,7 @@
   <section class="cta-section">
     <h2>Ready for Your Playa Adventure?</h2>
     <p>Book your 2026 Burning Man RV today. Limited availability!</p>
-    <a href="#availability" class="btn btn-primary">Reserve Your Spot</a>
+    <a href="#availability" class="btn btn-primary" aria-label="Reserve your Burning Man RV spot">Reserve Your Spot</a>
   </section>
 
   <!-- Newsletter / Lead capture -->
@@ -622,22 +834,22 @@
     <div class="wrap">
       <h3 id="newsletter-heading">Join the list for 2026 updates</h3>
       <p>Be first to hear when inventory opens, plus get playa‑prep tips from our team.</p>
-      <form id="lead-form" aria-label="Lead capture">
-        <input type="text" name="name" placeholder="Your name" aria-label="Name" required>
-        <input type="email" name="email" placeholder="Email address" aria-label="Email" required>
-        <select name="interest" aria-label="Interest">
+      <form id="lead-form" aria-label="Newsletter subscription form">
+        <input type="text" name="name" placeholder="Your name" aria-label="Your name" required>
+        <input type="email" name="email" placeholder="Email address" aria-label="Your email address" required>
+        <select name="interest" aria-label="Select your interest area">
           <option value="rv">RV rental</option>
           <option value="power">Power / generators</option>
           <option value="hauling">Housing / hauling</option>
         </select>
-        <button type="submit">Notify me</button>
+        <button type="submit" aria-label="Subscribe to newsletter">Notify me</button>
       </form>
-      <div id="lead-success" class="success" role="status">Thanks! We'll be in touch soon.</div>
+      <div id="lead-success" class="success" role="status" aria-live="polite">Thanks! We'll be in touch soon.</div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer id="contact">
+  <footer id="contact" role="contentinfo">
     <div class="footer-content">
       <div class="footer-section">
         <h3>Nomad Solutions</h3>
@@ -690,6 +902,31 @@
         var success = document.getElementById('lead-success');
         if (success) success.style.display = 'block';
         form.reset();
+      });
+    })();
+
+    // Fade-in animation on scroll
+    (function() {
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, observerOptions);
+
+      // Observe all feature cards, service cards, testimonials, and stats
+      document.addEventListener('DOMContentLoaded', function() {
+        var fadeElements = document.querySelectorAll('.feature, .service-card, .testimonial, .stat-item');
+        fadeElements.forEach(function(el) {
+          el.classList.add('fade-in');
+          observer.observe(el);
+        });
       });
     })();
   </script>
