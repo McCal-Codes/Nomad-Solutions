@@ -1,0 +1,108 @@
+'use strict';
+(function(){
+  const css = `
+    .nomad-fleet-widget { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 1200px; margin: 0 auto; }
+    .nomad-fleet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; padding: 0; margin: 0; list-style: none; }
+    .nomad-rv-card { background: #E8DCC4; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s; }
+    .nomad-rv-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0,0,0,0.15); }
+    .nomad-rv-image { position: relative; height: 220px; background-size: cover; background-position: center; background-color: #e5e7eb; }
+    .nomad-rv-content { padding: 24px; }
+    .nomad-rv-name { font-size: 24px; font-weight: 700; margin-bottom: 8px; color: #6B4C4C; }
+    .nomad-rv-sleep { display: inline-block; background: #D4A574; color: #6B4C4C; padding: 4px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+    .nomad-rv-description { color: #6B4C4C; margin-bottom: 16px; line-height: 1.6; }
+    .nomad-rv-specs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+    .nomad-rv-spec { background: #F5EFE6; padding: 12px; border-radius: 8px; }
+    .nomad-rv-spec-label { font-size: 12px; color: #71717a; margin-bottom: 4px; }
+    .nomad-rv-spec-value { font-weight: 600; color: #6B4C4C; }
+    .nomad-rv-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid #D4A574; }
+    .nomad-rv-price { font-size: 28px; font-weight: 800; color: #A85B5B; }
+    .nomad-rv-price-label { font-size: 14px; color: #71717a; margin-top: 4px; }
+    .nomad-rv-link { color: #6B4C4C; text-decoration: none; font-weight: 600; transition: color 0.2s; }
+    .nomad-rv-link:hover { color: #D4A574; }
+    .nomad-fleet-spinner { display: flex; justify-content: center; align-items: center; padding: 60px 20px; }
+    .nomad-fleet-spinner::after { content: ''; width: 40px; height: 40px; border: 4px solid #E8DCC4; border-top-color: #A85B5B; border-radius: 50%; animation: nomad-fleet-spin 0.8s linear infinite; }
+    @keyframes nomad-fleet-spin { to { transform: rotate(360deg); } }
+    .nomad-fleet-error { text-align: center; padding: 40px 20px; color: #ef4444; }
+    .nomad-fleet-error button { margin-top: 16px; padding: 12px 24px; background: #A85B5B; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+    .nomad-fleet-error button:hover { background: #D4A574; }
+    @media (max-width: 768px) { .nomad-fleet-grid { grid-template-columns: 1fr; } .nomad-rv-specs { grid-template-columns: 1fr; } }
+  `;
+  const style = document.createElement('style');
+  style.textContent = css;
+  document.head.appendChild(style);
+
+  const vehicles = [
+    { id: 'rv-001', name: 'Desert Cruiser', image: 'https://via.placeholder.com/400x300/E8DCC4/6B4C4C?text=Class+A+RV', description: 'Luxury Class A motorhome perfect for extended desert stays. Full kitchen, bathroom, and sleeping for 6.', class: 'Class A', sleeps: 6, length: '35 ft', year: 2023, pricePerWeek: 2800 },
+    { id: 'rv-002', name: 'Playa Explorer', image: 'https://via.placeholder.com/400x300/E8DCC4/6B4C4C?text=Class+C+RV', description: 'Versatile Class C with excellent fuel economy. Comfortable for 4 with all essential amenities.', class: 'Class C', sleeps: 4, length: '28 ft', year: 2022, pricePerWeek: 1800 },
+    { id: 'rv-003', name: 'Nomad Compact', image: 'https://via.placeholder.com/400x300/E8DCC4/6B4C4C?text=Class+B+Van', description: 'Nimble Class B van conversion. Perfect for couples who want easy parking and maneuverability.', class: 'Class B', sleeps: 2, length: '21 ft', year: 2024, pricePerWeek: 1200 },
+    { id: 'rv-004', name: 'Family Hauler', image: 'https://via.placeholder.com/400x300/E8DCC4/6B4C4C?text=Large+Class+A', description: 'Spacious Class A with dual slide-outs. Multiple sleeping areas and ample storage for gear.', class: 'Class A', sleeps: 6, length: '38 ft', year: 2023, pricePerWeek: 2500 },
+    { id: 'rv-005', name: 'Adventure Seeker', image: 'https://via.placeholder.com/400x300/E8DCC4/6B4C4C?text=Travel+Trailer', description: 'Lightweight travel trailer, perfect for those with their own tow vehicle. Easy to set up.', class: 'Travel Trailer', sleeps: 4, length: '24 ft', year: 2022, pricePerWeek: 1500 },
+    { id: 'rv-006', name: 'Cozy Camper', image: 'https://via.placeholder.com/400x300/E8DCC4/6B4C4C?text=Class+B', description: 'Efficient Class B with smart storage solutions. Ideal for minimalist burners.', class: 'Class B', sleeps: 2, length: '19 ft', year: 2024, pricePerWeek: 1000 }
+  ];
+
+  function card(rv){
+    return `
+      <div class="nomad-rv-card">
+        <div class="nomad-rv-image">
+          <img src="${rv.image}" alt="${rv.name}" loading="lazy" decoding="async" width="400" height="300" style="width:100%;height:100%;object-fit:cover;" />
+        </div>
+        <div class="nomad-rv-content">
+          <h3 class="nomad-rv-name">${rv.name}</h3>
+          <span class="nomad-rv-sleep">Sleeps ${rv.sleeps}</span>
+          <p class="nomad-rv-description">${rv.description}</p>
+          <div class="nomad-rv-specs">
+            <div class="nomad-rv-spec"><div class="nomad-rv-spec-label">Class</div><div class="nomad-rv-spec-value">${rv.class}</div></div>
+            <div class="nomad-rv-spec"><div class="nomad-rv-spec-label">Length</div><div class="nomad-rv-spec-value">${rv.length}</div></div>
+            <div class="nomad-rv-spec"><div class="nomad-rv-spec-label">Year</div><div class="nomad-rv-spec-value">${rv.year}</div></div>
+            <div class="nomad-rv-spec"><div class="nomad-rv-spec-label">Sleeps</div><div class="nomad-rv-spec-value">${rv.sleeps} people</div></div>
+          </div>
+          <div class="nomad-rv-footer">
+            <div>
+              <div class="nomad-rv-price">$${rv.pricePerWeek.toLocaleString()}</div>
+              <div class="nomad-rv-price-label">per week</div>
+            </div>
+            <a href="#fleet" class="nomad-rv-link">View Details →</a>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function render(list){
+    const el = document.getElementById('nomad-fleet-widget');
+    if (!el) return;
+    el.innerHTML = `
+      <div class="nomad-fleet-widget">
+        <div class="nomad-fleet-grid">
+          ${list.map(card).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function loading(){
+    const el = document.getElementById('nomad-fleet-widget');
+    if (!el) return;
+    el.innerHTML = '<div class="nomad-fleet-spinner"></div>';
+  }
+
+  function init(){
+    loading();
+    setTimeout(() => { try { render(vehicles); } catch(e){
+      const el = document.getElementById('nomad-fleet-widget');
+      if (!el) return;
+      el.innerHTML = `
+        <div class="nomad-fleet-error">
+          <p>Unable to load fleet. Please try again.</p>
+          <button onclick="window.location.reload()">Retry</button>
+        </div>
+      `;
+    } }, 500);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
