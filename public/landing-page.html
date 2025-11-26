@@ -606,7 +606,7 @@
     <div class="container">
       <h2 class="section-title">Live Fleet Availability</h2>
       <p class="section-subtitle">Check real-time availability for Burning Man 2026</p>
-      <div id="nomad-availability-widget"></div>
+      <div id="nomad-availability-widget" data-nomad-widget="availability" data-api-url="/api/availability"></div>
       <noscript>
         <div class="nomad-availability-widget">
           <p>JavaScript is disabled. Enable it to see live availability.</p>
@@ -641,7 +641,7 @@
   <section class="container" id="fleet">
     <h2 class="section-title">Our Fleet</h2>
     <p class="section-subtitle">Choose from our selection of well-maintained, desert-ready vehicles</p>
-    <div id="nomad-fleet-widget"></div>
+    <div id="nomad-fleet-widget" data-nomad-widget="fleet"></div>
     <noscript>
       <div class="nomad-fleet-widget">
         <div class="nomad-fleet-grid">
@@ -714,8 +714,8 @@
 
   <!-- Widgets will be loaded here -->
   <!-- Use minified bundles for production-like embedding -->
-  <script src="https://cdn.jsdelivr.net/gh/McCal-Codes/Nomad-Solutions@main/public/widgets/availability/availability-widget-simple-v2.min.js" defer onerror="console.error('Availability widget failed to load');(function(){var c=document.getElementById('nomad-availability-widget');if(c){c.innerHTML='<div class=\'nomad-availability-widget\'><p>Availability widget failed to load. Please refresh.</p></div>';}})();"></script>
-  <script src="https://cdn.jsdelivr.net/gh/McCal-Codes/Nomad-Solutions@main/public/widgets/fleet/fleet-widget-simple-v2.min.js" defer onerror="console.error('Fleet widget failed to load');(function(){var c=document.getElementById('nomad-fleet-widget');if(c){c.innerHTML='<div class=\'nomad-fleet-error\'><p>Fleet widget failed to load. Please refresh.</p></div>';}})();"></script>
+  <script src="https://cdn.jsdelivr.net/gh/McCal-Codes/Nomad-Solutions@main/public/widgets/availability-widget.js" defer onerror="console.error('Availability widget failed to load');(function(){var c=document.getElementById('nomad-availability-widget');if(c){c.innerHTML='<div class=\'nomad-availability-widget\'><p>Availability widget failed to load. Please refresh.</p></div>';}})();"></script>
+  <script src="https://cdn.jsdelivr.net/gh/McCal-Codes/Nomad-Solutions@main/public/widgets/fleet/fleet-widget-simple.js" defer onerror="console.error('Fleet widget failed to load');(function(){var c=document.getElementById('nomad-fleet-widget');if(c){c.innerHTML='<div class=\'nomad-fleet-error\'><p>Fleet widget failed to load. Please refresh.</p></div>';}})();"></script>
   <script>
     // Lightweight client-side handler for the lead form
     (function(){
