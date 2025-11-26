@@ -19,7 +19,7 @@
     }
     
     .nomad-rv-card {
-      background: #ffffff;
+      background: #E8DCC4;
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -72,7 +72,7 @@
       font-size: 20px;
       font-weight: 600;
       margin: 0;
-      color: #1a1a1a;
+      color: #6B4C4C;
     }
     
     .nomad-fleet-widget.dark .nomad-rv-name {
@@ -83,8 +83,8 @@
       font-size: 13px;
       padding: 4px 10px;
       border-radius: 20px;
-      background: rgba(217, 119, 6, 0.15);
-      color: #92400e;
+      background: #D4A574;
+      color: #6B4C4C;
       font-weight: 600;
       white-space: nowrap;
     }
@@ -96,7 +96,7 @@
     
     .nomad-rv-description {
       font-size: 14px;
-      color: rgba(0, 0, 0, 0.7);
+      color: #6B4C4C;
       margin-bottom: 16px;
       line-height: 1.6;
     }
@@ -113,7 +113,7 @@
     }
     
     .nomad-rv-spec {
-      background: rgba(0, 0, 0, 0.04);
+      background: #F5EFE6;
       border-radius: 8px;
       padding: 12px;
     }
@@ -137,7 +137,7 @@
     .nomad-rv-spec-value {
       font-weight: 600;
       font-size: 14px;
-      color: #1a1a1a;
+      color: #6B4C4C;
       margin: 0;
     }
     
@@ -160,19 +160,19 @@
     .nomad-rv-price {
       font-size: 24px;
       font-weight: 700;
-      color: #d97706;
+      color: #A85B5B;
       margin: 0;
     }
     
     .nomad-rv-link {
       font-weight: 600;
-      color: #1a1a1a;
+      color: #6B4C4C;
       text-decoration: none;
       transition: color 0.2s;
     }
     
     .nomad-rv-link:hover {
-      color: #d97706;
+      color: #D4A574;
       text-decoration: underline;
     }
     
@@ -180,6 +180,89 @@
       color: #ffffff;
     }
     
+    .nomad-fleet-loading {
+      text-align: center;
+      padding: 60px 20px;
+      color: rgba(0, 0, 0, 0.6);
+    }
+
+    .nomad-fleet-widget.dark .nomad-fleet-loading {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .nomad-fleet-spinner {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-top-color: #A85B5B;
+      border-radius: 50%;
+      animation: nomad-fleet-spin 0.8s linear infinite;
+      margin-bottom: 16px;
+    }
+
+    .nomad-fleet-widget.dark .nomad-fleet-spinner {
+      border-color: rgba(255, 255, 255, 0.1);
+      border-top-color: #f59e0b;
+    }
+
+    @keyframes nomad-fleet-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .nomad-fleet-error {
+      text-align: center;
+      padding: 48px 24px;
+      color: #991b1b;
+      background: #fee2e2;
+      border-radius: 16px;
+      margin: 24px;
+    }
+
+    .nomad-fleet-widget.dark .nomad-fleet-error {
+      color: #fca5a5;
+      background: rgba(239, 68, 68, 0.2);
+    }
+
+    .nomad-fleet-error-title {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .nomad-fleet-error-message {
+      font-size: 15px;
+      margin-bottom: 20px;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .nomad-fleet-retry {
+      background: #d97706;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 28px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nomad-fleet-retry:hover {
+      background: #b45309;
+      transform: translateY(-1px);
+    }
+
+    .nomad-fleet-widget.dark .nomad-fleet-retry {
+      background: #f59e0b;
+      color: #111827;
+    }
+
+    .nomad-fleet-widget.dark .nomad-fleet-retry:hover {
+      background: #fbbf24;
+    }
+
     @media (max-width: 768px) {
       .nomad-fleet-grid {
         grid-template-columns: 1fr;
@@ -337,22 +420,52 @@
     const bookingUrl = options.bookingUrl || '/booking';
     const imagesBase = options.imagesBase || getDefaultImagesBase();
     const fallbackImgs = defaultImages(imagesBase);
-    const vehicles = options.vehicles || getFleetData(imagesBase);
     dlog(container, 'Rendering fleet widget');
     
     const widgetDiv = document.createElement('div');
     widgetDiv.className = 'nomad-fleet-widget' + (darkMode ? ' dark' : '');
     
-    let html = '<ul class="nomad-fleet-grid">';
-    vehicles.forEach(function(vehicle, idx) {
-      html += renderCard(vehicle, bookingUrl, fallbackImgs[idx % fallbackImgs.length]);
-    });
-    html += '</ul>';
-    
-    widgetDiv.innerHTML = html;
+    // Show loading state first
+    widgetDiv.innerHTML = '<div class="nomad-fleet-loading"><div class="nomad-fleet-spinner"></div><div>Loading fleet...</div></div>';
     container.appendChild(widgetDiv);
     container.setAttribute('data-nomad-widget-initialized', 'true');
-    dlog(container, 'Fleet widget initialized');
+    
+    // Simulate async loading (replace with real API call if needed)
+    setTimeout(function() {
+      try {
+        const vehicles = options.vehicles || getFleetData(imagesBase);
+        let html = '<ul class="nomad-fleet-grid">';
+        vehicles.forEach(function(vehicle, idx) {
+          html += renderCard(vehicle, bookingUrl, fallbackImgs[idx % fallbackImgs.length]);
+        });
+        html += '</ul>';
+        
+        const loadingEl = widgetDiv.querySelector('.nomad-fleet-loading');
+        if (loadingEl) {
+          loadingEl.outerHTML = html;
+        } else {
+          widgetDiv.innerHTML = html;
+        }
+        dlog(container, 'Fleet widget loaded successfully');
+      } catch(err) {
+        // Show error state
+        const errHtml = '<div class="nomad-fleet-error">' +
+          '<div class="nomad-fleet-error-title">⚠️ Unable to Load Fleet</div>' +
+          '<div class="nomad-fleet-error-message">We couldn\'t load the vehicle information. Please check your connection and try again.</div>' +
+          '<button class="nomad-fleet-retry" onclick="window.NomadFleetWidget._retry(this)">Retry</button>' +
+          '</div>';
+        const loadingEl = widgetDiv.querySelector('.nomad-fleet-loading');
+        if (loadingEl) {
+          loadingEl.outerHTML = errHtml;
+        } else {
+          widgetDiv.innerHTML = errHtml;
+        }
+        
+        // Store retry data
+        widgetDiv._retryData = { options: options };
+        dlog(container, 'Fleet widget error: ' + (err && err.message ? err.message : 'Unknown error'));
+      }
+    }, 500);
   }
   
   // Initialize
@@ -473,7 +586,59 @@
       }
     },
     scan: function(){ init(); },
-    debug: false
+    debug: false,
+    _retry: function(btn) {
+      try {
+        const widgetDiv = btn.closest('.nomad-fleet-widget');
+        if (!widgetDiv || !widgetDiv._retryData) return;
+        
+        // Remove error and show loading
+        const errorEl = widgetDiv.querySelector('.nomad-fleet-error');
+        if (errorEl) {
+          errorEl.outerHTML = '<div class="nomad-fleet-loading"><div class="nomad-fleet-spinner"></div><div>Retrying...</div></div>';
+        }
+        
+        // Retry load
+        const data = widgetDiv._retryData;
+        const options = data.options || {};
+        const bookingUrl = options.bookingUrl || '/booking';
+        const imagesBase = options.imagesBase || getDefaultImagesBase();
+        const fallbackImgs = defaultImages(imagesBase);
+        
+        setTimeout(function() {
+          try {
+            const vehicles = options.vehicles || getFleetData(imagesBase);
+            let html = '<ul class="nomad-fleet-grid">';
+            vehicles.forEach(function(vehicle, idx) {
+              html += renderCard(vehicle, bookingUrl, fallbackImgs[idx % fallbackImgs.length]);
+            });
+            html += '</ul>';
+            
+            const loadingEl = widgetDiv.querySelector('.nomad-fleet-loading');
+            if (loadingEl) {
+              loadingEl.outerHTML = html;
+            } else {
+              widgetDiv.innerHTML = html;
+            }
+          } catch(err) {
+            // Show error again
+            const errHtml = '<div class="nomad-fleet-error">' +
+              '<div class="nomad-fleet-error-title">⚠️ Unable to Load Fleet</div>' +
+              '<div class="nomad-fleet-error-message">We couldn\'t load the vehicle information. Please check your connection and try again.</div>' +
+              '<button class="nomad-fleet-retry" onclick="window.NomadFleetWidget._retry(this)">Retry</button>' +
+              '</div>';
+            const loadingEl = widgetDiv.querySelector('.nomad-fleet-loading');
+            if (loadingEl) {
+              loadingEl.outerHTML = errHtml;
+            } else {
+              widgetDiv.innerHTML = errHtml;
+            }
+          }
+        }, 500);
+      } catch(e) {
+        console.error('Retry failed:', e);
+      }
+    }
   };
   
   // Auto-init on DOM ready

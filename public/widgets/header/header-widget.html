@@ -1,0 +1,222 @@
+<!-- Nomad Solutions - Squarespace Header Widget -->
+<!-- Copy this entire file into a Squarespace Code Block at the top of your site -->
+
+<style>
+/* Nomad Solutions Header Styles */
+.nomad-header {
+  background: linear-gradient(135deg, #6B4C4C 0%, #A85B5B 100%);
+  color: white;
+  padding: 20px 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nomad-header nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nomad-header .logo {
+  font-size: 24px;
+  font-weight: 700;
+  text-decoration: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s;
+}
+
+.nomad-header .logo:hover {
+  opacity: 0.9;
+}
+
+.nomad-header .nav-links {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nomad-header .nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.nomad-header .nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #D4A574;
+  transition: width 0.3s ease;
+}
+
+.nomad-header .nav-links a:hover::after {
+  width: 100%;
+}
+
+.nomad-header .nav-links a:hover {
+  color: #D4A574;
+}
+
+/* Mobile menu toggle */
+.nomad-header .mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  transition: opacity 0.2s;
+}
+
+.nomad-header .mobile-menu-toggle:hover {
+  opacity: 0.8;
+}
+
+/* Top contact bar (optional) */
+.nomad-top-contact {
+  background: #6B4C4C;
+  color: #F5EFE6;
+  font-size: 14px;
+}
+
+.nomad-top-contact .bar {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nomad-top-contact a {
+  color: #D4A574;
+  text-decoration: none;
+  transition: text-decoration 0.2s;
+}
+
+.nomad-top-contact a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .nomad-header .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #6B4C4C 0%, #A85B5B 100%);
+    flex-direction: column;
+    gap: 0;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 999;
+  }
+
+  .nomad-header .nav-links.active {
+    display: flex;
+  }
+
+  .nomad-header .nav-links li {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .nomad-header .nav-links li:last-child {
+    border-bottom: none;
+  }
+
+  .nomad-header .mobile-menu-toggle {
+    display: block;
+  }
+
+  .nomad-header {
+    position: relative;
+  }
+
+  .nomad-top-contact .bar {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}
+</style>
+
+<!-- Optional: Top Contact Bar (delete this section if not needed) -->
+<div class="nomad-top-contact">
+  <div class="bar">
+    <span>Reno, NV • Serving Black Rock City and beyond</span>
+    <span>
+      <a href="tel:+17753998621">(775) 399-8621</a>
+      &nbsp;•&nbsp;
+      <a href="mailto:hello@nomadsols.com">hello@nomadsols.com</a>
+    </span>
+  </div>
+</div>
+
+<!-- Main Navigation Header -->
+<header class="nomad-header">
+  <nav>
+    <a href="/" class="logo">🏜️ Nomad Solutions</a>
+    
+    <button class="mobile-menu-toggle" onclick="toggleNomadMenu()" aria-label="Toggle menu">
+      ☰
+    </button>
+    
+    <ul class="nav-links" id="nomadNavLinks">
+      <li><a href="#fleet">Fleet</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#availability">Availability</a></li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+// Mobile menu toggle function
+function toggleNomadMenu() {
+  const navLinks = document.getElementById('nomadNavLinks');
+  navLinks.classList.toggle('active');
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(event) {
+  const header = document.querySelector('.nomad-header');
+  const navLinks = document.getElementById('nomadNavLinks');
+  
+  if (header && !header.contains(event.target)) {
+    navLinks.classList.remove('active');
+  }
+});
+
+// Close mobile menu when a link is clicked
+document.querySelectorAll('.nomad-header .nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    const navLinks = document.getElementById('nomadNavLinks');
+    if (navLinks) {
+      navLinks.classList.remove('active');
+    }
+  });
+});
+</script>

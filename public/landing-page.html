@@ -29,27 +29,6 @@
       opacity: 1;
     }
 
-        /* Top contact bar */
-        .top-contact {
-          background: #0f172a; /* slate-900 */
-          color: #e5e7eb;
-          font-size: 14px;
-        }
-        .top-contact .bar {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 10px 20px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 12px;
-        }
-        .top-contact a {
-          color: #fbbf24; /* amber-300 */
-          text-decoration: none;
-        }
-        .top-contact a:hover { text-decoration: underline; }
-
     * {
       margin: 0;
       padding: 0;
@@ -59,80 +38,17 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       line-height: 1.65;
-      color: #18181b;
-      background: #fafaf9;
+      color: #6B4C4C;
+      background: #F5EFE6;
       font-size: 16px;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
     
-    /* Header */
-    header {
-      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-      color: white;
-      padding: 20px 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    
-    nav {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .logo {
-      font-size: 24px;
-      font-weight: 700;
-      text-decoration: none;
-      color: white;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .nav-links {
-      display: flex;
-      gap: 30px;
-      list-style: none;
-    }
-    
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.2s ease;
-      position: relative;
-    }
-    
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: #f59e0b;
-      transition: width 0.3s ease;
-    }
-    
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-    
-    .nav-links a:hover {
-      color: #f59e0b;
-    }
-    
     /* Hero Section */
     .hero {
-      background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-      color: white;
+      background: #F5EFE6;
+      color: #6B4C4C;
       padding: 120px 20px 100px;
       text-align: center;
     }
@@ -159,13 +75,14 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255,255,255,0.15);
+      background: rgba(212, 165, 116, 0.2);
       padding: 10px 16px;
       border-radius: 999px;
       font-size: 14px;
       margin-bottom: 20px;
       font-weight: 500;
       letter-spacing: 0.01em;
+      color: #6B4C4C;
     }
     
     .cta-buttons {
@@ -190,26 +107,27 @@
     }
     
     .btn-primary {
-      background: white;
-      color: #18181b;
+      background: #A85B5B;
+      color: white;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     
     .btn-primary:hover {
-      background: #fafafa;
+      background: #D4A574;
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(0,0,0,0.25);
     }
     
     .btn-secondary {
       background: transparent;
-      color: white;
-      border: 2px solid rgba(255,255,255,0.9);
+      color: #6B4C4C;
+      border: 2px solid #6B4C4C;
     }
     
     .btn-secondary:hover {
-      background: rgba(255,255,255,0.15);
-      border-color: white;
+      background: rgba(107, 76, 76, 0.1);
+      border-color: #A85B5B;
+      color: #A85B5B;
     }
     
     /* Container */
@@ -224,7 +142,7 @@
       font-size: clamp(32px, 4vw, 48px);
       font-weight: 800;
       margin-bottom: 16px;
-      color: #18181b;
+      color: #6B4C4C;
       line-height: 1.2;
       letter-spacing: -0.02em;
     }
@@ -249,12 +167,12 @@
     }
     
     .feature {
-      background: white;
+      background: #E8DCC4;
       padding: 36px;
       border-radius: 16px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.08);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 1px solid rgba(0,0,0,0.04);
+      border: 1px solid #D4A574;
     }
     
     .feature:hover {
@@ -272,7 +190,7 @@
       font-size: 22px;
       font-weight: 700;
       margin-bottom: 12px;
-      color: #18181b;
+      color: #6B4C4C;
       letter-spacing: -0.01em;
     }
     
@@ -289,11 +207,11 @@
       gap: 28px;
     }
     .service-card {
-      background: white;
+      background: #E8DCC4;
       border-radius: 16px;
       padding: 32px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-      border: 1px solid rgba(0,0,0,0.04);
+      border: 1px solid #D4A574;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .service-card:hover { 
@@ -313,39 +231,41 @@
       margin: 16px 0 12px; 
       font-size: 22px;
       font-weight: 700;
-      color: #18181b;
+      color: #6B4C4C;
       letter-spacing: -0.01em;
     }
     .service-card p { 
-      color: #52525b; 
+      color: #6B4C4C; 
       margin-bottom: 16px;
       line-height: 1.7;
       font-size: 16px;
     }
     .service-link { 
-      color: #b45309; 
+      color: #A85B5B; 
       font-weight: 600; 
       text-decoration: none;
       font-size: 15px;
       transition: color 0.2s;
     }
     .service-link:hover { 
-      color: #d97706;
+      color: #D4A574;
       text-decoration: underline; 
     }
     
     /* Widget Section */
     .widget-section {
-      background: white;
+      background: #F5EFE6;
       padding: 96px 24px;
     }
     
     /* Stats */
     .stats {
-      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      background: linear-gradient(135deg, #6B4C4C 0%, #A85B5B 100%);
       color: white;
       padding: 96px 24px;
       text-align: center;
+      margin: 0 24px;
+      border-radius: 24px;
     }
     
     .stats-grid {
@@ -363,7 +283,7 @@
     .stat-number {
       font-size: clamp(42px, 5vw, 56px);
       font-weight: 900;
-      color: #f59e0b;
+      color: #D4A574;
       margin-bottom: 12px;
       line-height: 1;
       letter-spacing: -0.02em;
@@ -383,11 +303,11 @@
     }
     
     .testimonial {
-      background: white;
+      background: #E8DCC4;
       padding: 36px;
       border-radius: 16px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-      border: 1px solid rgba(0,0,0,0.04);
+      border: 1px solid #D4A574;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -398,7 +318,7 @@
     
     .testimonial-text {
       font-size: 17px;
-      color: #3f3f46;
+      color: #6B4C4C;
       margin-bottom: 24px;
       line-height: 1.75;
       font-style: italic;
@@ -406,7 +326,7 @@
     
     .testimonial-author {
       font-weight: 700;
-      color: #18181b;
+      color: #6B4C4C;
       font-size: 16px;
     }
     
@@ -418,10 +338,12 @@
     
     /* CTA Section */
     .cta-section {
-      background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+      background: linear-gradient(135deg, #D4A574 0%, #A85B5B 100%);
       color: white;
       padding: 120px 24px;
       text-align: center;
+      margin: 0 24px 64px 24px;
+      border-radius: 24px;
     }
     
     .cta-section h2 {
@@ -439,68 +361,15 @@
       line-height: 1.6;
     }
     
-    /* Footer */
-    footer {
-      background: #1a1a1a;
-      color: white;
-      padding: 80px 24px 24px;
-    }
-    
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 56px;
-      margin-bottom: 48px;
-    }
-    
-    .footer-section h3 {
-      margin-bottom: 20px;
-      color: #f59e0b;
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-    }
 
-    .footer-section p {
-      line-height: 1.7;
-      color: #d1d5db;
-      font-size: 15px;
-    }
-    
-    .footer-section ul {
-      list-style: none;
-    }
-    
-    .footer-section li {
-      margin-bottom: 10px;
-    }
-    
-    .footer-section a {
-      color: #d1d5db;
-      text-decoration: none;
-      transition: color 0.2s;
-      font-size: 15px;
-    }
-    
-    .footer-section a:hover {
-      color: white;
-    }
-    
-    .footer-bottom {
-      text-align: center;
-      padding-top: 24px;
-      border-top: 1px solid #333;
-      color: #a1a1aa;
-      font-size: 14px;
-    }
 
     /* Newsletter */
     .newsletter {
-      background: #0b1220;
-      color: #e5e7eb;
+      background: #A85B5B;
+      color: #F5EFE6;
       padding: 96px 24px;
+      margin: 0 24px;
+      border-radius: 24px;
     }
     .newsletter .wrap { max-width: 920px; margin: 0 auto; text-align: center; }
     .newsletter h3 { 
@@ -508,9 +377,10 @@
       margin-bottom: 12px;
       font-weight: 800;
       letter-spacing: -0.01em;
+      color: white;
     }
     .newsletter p { 
-      color: #a1a1aa; 
+      color: rgba(255, 255, 255, 0.85); 
       margin-bottom: 32px;
       font-size: 18px;
       line-height: 1.7;
@@ -525,30 +395,30 @@
     .newsletter input, .newsletter select {
       padding: 14px 16px;
       border-radius: 10px;
-      border: 1px solid #334155;
-      background: #111827;
-      color: #e5e7eb;
+      border: 1px solid #6B4C4C;
+      background: #E8DCC4;
+      color: #6B4C4C;
       font-size: 16px;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
     .newsletter input:focus, .newsletter select:focus {
       outline: none;
-      border-color: #f59e0b;
-      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+      border-color: #D4A574;
+      box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2);
     }
     .newsletter button { 
       padding: 14px 24px; 
       border-radius: 10px; 
       border: 0; 
       font-weight: 700; 
-      background: #f59e0b; 
-      color: #111827;
+      background: #D4A574; 
+      color: #6B4C4C;
       font-size: 16px;
       cursor: pointer;
       transition: all 0.2s;
     }
     .newsletter button:hover {
-      background: #fbbf24;
+      background: #E8DCC4;
       transform: translateY(-1px);
     }
     .newsletter .success { 
@@ -562,12 +432,12 @@
 
     /* Location strip */
     .location-strip {
-      background: #fff7ed;
-      color: #7c2d12;
+      background: #E8DCC4;
+      color: #6B4C4C;
       text-align: center;
       padding: 14px 24px;
-      border-top: 1px solid #fed7aa;
-      border-bottom: 1px solid #fed7aa;
+      border-top: 1px solid #D4A574;
+      border-bottom: 1px solid #D4A574;
       font-weight: 600;
       font-size: 15px;
       letter-spacing: 0.01em;
@@ -602,22 +472,6 @@
       .footer-content {
         gap: 40px;
       }
-      
-      .nav-links {
-        display: none;
-      }
-      
-      .features, .services, .testimonials {
-        gap: 20px;
-      }
-
-      .stats-grid {
-        gap: 40px;
-      }
-
-      .feature, .service-card, .testimonial {
-        padding: 28px;
-      }
     }
 
     @media (max-width: 480px) {
@@ -649,36 +503,11 @@
   </style>
 </head>
 <body>
-  <!-- Top Contact Bar -->
-  <div class="top-contact" role="banner" aria-label="Contact information">
-    <div class="bar">
-      <span>Reno, NV • Serving Black Rock City and beyond</span>
-      <span>
-        <a href="tel:+17753998621" aria-label="Call Nomad Solutions at 775-399-8621">(775) 399-8621</a>
-        &nbsp;•&nbsp;
-        <a href="mailto:hello@nomadsols.com" aria-label="Email Nomad Solutions at hello@nomadsols.com">hello@nomadsols.com</a>
-      </span>
-    </div>
-  </div>
-
-  <!-- Header -->
-  <header role="navigation">
-    <nav aria-label="Main navigation">
-      <a href="/" class="logo" aria-label="Nomad Solutions home">🏜️ Nomad Solutions</a>
-      <ul class="nav-links">
-        <li><a href="#fleet">Fleet</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
-
   <!-- Hero Section -->
   <section class="hero" id="about" role="main">
     <div class="sub-badge" role="text">Nomad with us • Reno, Nevada</div>
-    <h1>Playa‑Ready RV Rentals for Burning Man</h1>
-    <p>Premium, dust‑proofed motorhomes and trailers engineered for Black Rock City. Delivered with power, water, and 24/7 on‑playa support.</p>
+    <h1>Desert‑Ready RV Rentals for Burning Man</h1>
+    <p>Premium, dust‑proofed motorhomes and trailers engineered for Black Rock City. Delivered with power, water, and 24/7 on‑site support.</p>
     <div class="cta-buttons">
       <a href="#fleet" class="btn btn-primary" aria-label="View our RV fleet">View Our Fleet</a>
       <a href="#availability" class="btn btn-secondary" aria-label="Check RV availability">Check Availability</a>
@@ -686,14 +515,14 @@
   </section>
 
   <!-- Features Section -->
-  <section class="container">
+  <section class="container" id="features">
     <h2 class="section-title">Why Choose Nomad Solutions?</h2>
-    <p class="section-subtitle">We've learned from 6+ years of playa experience. Every rental includes essentials that most others charge extra for.</p>
+    <p class="section-subtitle">We've learned from 6+ years of Burning Man experience. Every rental includes essentials that most others charge extra for.</p>
     
-    <div class="features" id="features">
+    <div class="features">
       <div class="feature">
         <div class="feature-icon" role="img" aria-label="Shield icon">🛡️</div>
-        <h3>Playa-Ready</h3>
+        <h3>Desert-Ready</h3>
         <p>Comprehensive dust-proofing, sealed cabinets, filtered air systems. Your RV arrives ready for the harshest conditions.</p>
       </div>
       
@@ -735,11 +564,11 @@
   <!-- Services Section -->
   <section class="container" id="services">
     <h2 class="section-title">More Than RVs</h2>
-    <p class="section-subtitle">From wheels to watts, we help you build a comfortable, resilient camp.</p>
+    <p class="section-subtitle">From wheels to watts, we help you prepare for an incredible desert adventure.</p>
     <div class="services">
       <div class="service-card">
         <span class="service-icon"><img src="images/services/rv.svg" alt="RV rental service icon with orange gradient"></span>
-        <h3>Playa‑Ready RV Rentals</h3>
+        <h3>Desert‑Ready RV Rentals</h3>
         <p>Class A, B, and C motorhomes plus travel trailers—dust‑sealed, serviced, and delivered. Power and water options included.</p>
         <a class="service-link" href="#fleet" aria-label="Explore our RV fleet">Explore fleet →</a>
       </div>
@@ -768,7 +597,7 @@
   </section>
 
   <!-- Stats Section -->
-  <section class="stats">
+  <section class="stats" id="stats">
     <div class="stats-grid">
       <div class="stat-item">
         <div class="stat-number">500+</div>
@@ -792,12 +621,12 @@
   <!-- Fleet Preview Section -->
   <section class="container" id="fleet">
     <h2 class="section-title">Our Fleet</h2>
-    <p class="section-subtitle">Choose from our selection of well-maintained, playa-ready vehicles</p>
+    <p class="section-subtitle">Choose from our selection of well-maintained, desert-ready vehicles</p>
     <div id="nomad-fleet-widget"></div>
   </section>
 
   <!-- Testimonials Section -->
-  <section class="container">
+  <section class="container" id="testimonials">
     <h2 class="section-title">What Burners Say</h2>
     <p class="section-subtitle">Real experiences from past renters</p>
     
@@ -823,17 +652,17 @@
   </section>
 
   <!-- CTA Section -->
-  <section class="cta-section">
-    <h2>Ready for Your Playa Adventure?</h2>
+  <section class="cta-section" id="cta">
+    <h2>Ready for Your Desert Adventure?</h2>
     <p>Book your 2026 Burning Man RV today. Limited availability!</p>
     <a href="#availability" class="btn btn-primary" aria-label="Reserve your Burning Man RV spot">Reserve Your Spot</a>
   </section>
 
   <!-- Newsletter / Lead capture -->
-  <section class="newsletter" aria-labelledby="newsletter-heading">
+  <section class="newsletter" id="newsletter" aria-labelledby="newsletter-heading">
     <div class="wrap">
       <h3 id="newsletter-heading">Join the list for 2026 updates</h3>
-      <p>Be first to hear when inventory opens, plus get playa‑prep tips from our team.</p>
+      <p>Be first to hear when inventory opens, plus get desert‑prep tips from our team.</p>
       <form id="lead-form" aria-label="Newsletter subscription form">
         <input type="text" name="name" placeholder="Your name" aria-label="Your name" required>
         <input type="email" name="email" placeholder="Email address" aria-label="Your email address" required>
@@ -848,50 +677,571 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer id="contact" role="contentinfo">
-    <div class="footer-content">
-      <div class="footer-section">
-        <h3>Nomad Solutions</h3>
-        <p>Premium Burning Man RV rentals with comprehensive dust-proofing and 24/7 support.</p>
-      </div>
-      
-      <div class="footer-section">
-        <h3>Quick Links</h3>
-        <ul>
-          <li><a href="#fleet">Our Fleet</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#availability">Check Availability</a></li>
-          <li><a href="/faq">FAQ</a></li>
-        </ul>
-      </div>
-      
-      <div class="footer-section">
-        <h3>Contact</h3>
-        <ul>
-          <li>Email: <a href="mailto:hello@nomadsols.com">hello@nomadsols.com</a></li>
-          <li>Phone: <a href="tel:+17753998621">(775) 399-8621</a></li>
-          <li>Hours: Mon–Fri 9am–6pm PT</li>
-        </ul>
-      </div>
-      
-      <div class="footer-section">
-        <h3>Locations</h3>
-        <ul>
-          <li>Reno, Nevada</li>
-          <li>Las Vegas, Nevada</li>
-        </ul>
-      </div>
-    </div>
-    
-    <div class="footer-bottom">
-      <p>&copy; 2025 Nomad Solutions NV. All rights reserved.</p>
-    </div>
-  </footer>
-
   <!-- Widgets will be loaded here -->
-  <script src="./widgets/availability-widget-simple.js"></script>
-  <script src="./widgets/fleet-widget-simple.js"></script>
+  <script>
+// Availability Widget - Inline Version
+(function() {
+  'use strict';
+  
+  // Widget styles
+  const availabilityStyles = `
+    .nomad-availability-widget {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .nomad-availability-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    
+    .nomad-availability-header-left h3 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 0 6px 0;
+      color: #6B4C4C;
+    }
+    
+    .nomad-availability-header-left p {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #71717a;
+      margin: 0;
+    }
+    
+    .nomad-availability-badge {
+      font-size: 13px;
+      background: #D4A574;
+      color: #6B4C4C;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-weight: 600;
+    }
+    
+    .nomad-availability-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .nomad-availability-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #E8DCC4;
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid #D4A574;
+    }
+    
+    .nomad-availability-item:hover {
+      background: #D4A574;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nomad-availability-name {
+      font-weight: 600;
+      font-size: 16px;
+      color: #6B4C4C;
+    }
+    
+    .nomad-availability-status {
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 24px;
+      padding: 8px 18px;
+      white-space: nowrap;
+    }
+    
+    .nomad-availability-status.available {
+      background: #34d399;
+      color: white;
+    }
+    
+    .nomad-availability-status.limited {
+      background: #fbbf24;
+      color: #6B4C4C;
+    }
+    
+    .nomad-availability-status.booked {
+      background: #A85B5B;
+      color: white;
+    }
+    
+    .nomad-availability-loading {
+      text-align: center;
+      padding: 40px;
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 14px;
+    }
+
+    .nomad-availability-spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(0, 0, 0, 0.1);
+      border-top-color: #A85B5B;
+      border-radius: 50%;
+      animation: nomad-availability-spin 0.8s linear infinite;
+      margin-bottom: 12px;
+    }
+
+    @keyframes nomad-availability-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .nomad-availability-note {
+      font-size: 13px;
+      color: rgba(0, 0, 0, 0.5);
+      margin-top: 16px;
+      text-align: center;
+    }
+  `;
+  
+  // Inject styles
+  const styleSheet = document.createElement('style');
+  styleSheet.textContent = availabilityStyles;
+  document.head.appendChild(styleSheet);
+  
+  // Mock data
+  const mockAvailability = [
+    { name: 'Class C Adventurer', status: 'available' },
+    { name: 'Class A Expedition', status: 'limited' },
+    { name: 'Travel Trailer 24ft', status: 'available' },
+    { name: 'Class B Camper Van', status: 'booked', nextOpen: 'Sept 15' },
+    { name: 'Toy Hauler 28ft', status: 'available' }
+  ];
+  
+  function renderAvailability(data) {
+    const container = document.getElementById('nomad-availability-widget');
+    if (!container) return;
+    
+    let html = `
+      <div class="nomad-availability-widget">
+        <div class="nomad-availability-header">
+          <div class="nomad-availability-header-left">
+            <h3>Fleet Availability</h3>
+            <p>Live updates</p>
+          </div>
+          <span class="nomad-availability-badge">Real-time</span>
+        </div>
+        <ul class="nomad-availability-list">
+    `;
+    
+    data.forEach(function(item) {
+      const statusText = item.status === 'booked' && item.nextOpen 
+        ? 'Booked — open ' + item.nextOpen 
+        : item.status;
+      
+      html += `
+        <li class="nomad-availability-item">
+          <span class="nomad-availability-name">${item.name}</span>
+          <span class="nomad-availability-status ${item.status}">${statusText}</span>
+        </li>
+      `;
+    });
+    
+    html += `
+        </ul>
+        <p class="nomad-availability-note">Updated in real-time • Book early for best selection</p>
+      </div>
+    `;
+    
+    container.innerHTML = html;
+  }
+  
+  function showLoading() {
+    const container = document.getElementById('nomad-availability-widget');
+    if (!container) return;
+    container.innerHTML = `
+      <div class="nomad-availability-widget">
+        <div class="nomad-availability-loading">
+          <div class="nomad-availability-spinner"></div>
+          <div>Checking availability...</div>
+        </div>
+      </div>
+    `;
+  }
+  
+  // Initialize
+  function initAvailability() {
+    showLoading();
+    
+    setTimeout(() => {
+      try {
+        renderAvailability(mockAvailability);
+      } catch (error) {
+        console.error('Unable to load availability:', error);
+      }
+    }, 500);
+  }
+  
+  // Auto-initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAvailability);
+  } else {
+    initAvailability();
+  }
+})();
+  </script>
+  <script>
+// Fleet Widget - Inline Version
+(function() {
+  'use strict';
+  
+  // Widget styles
+  const styles = `
+    .nomad-fleet-widget {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .nomad-fleet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    
+    .nomad-rv-card {
+      background: #E8DCC4;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+    }
+    
+    .nomad-rv-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+    
+    .nomad-rv-image {
+      position: relative;
+      height: 220px;
+      background-size: cover;
+      background-position: center;
+      background-color: #e5e7eb;
+    }
+    
+    .nomad-rv-content {
+      padding: 24px;
+    }
+    
+    .nomad-rv-name {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #6B4C4C;
+    }
+    
+    .nomad-rv-sleep {
+      display: inline-block;
+      background: #D4A574;
+      color: #6B4C4C;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    
+    .nomad-rv-description {
+      color: #6B4C4C;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    
+    .nomad-rv-specs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    
+    .nomad-rv-spec {
+      background: #F5EFE6;
+      padding: 12px;
+      border-radius: 8px;
+    }
+    
+    .nomad-rv-spec-label {
+      font-size: 12px;
+      color: #71717a;
+      margin-bottom: 4px;
+    }
+    
+    .nomad-rv-spec-value {
+      font-weight: 600;
+      color: #6B4C4C;
+    }
+    
+    .nomad-rv-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid #D4A574;
+    }
+    
+    .nomad-rv-price {
+      font-size: 28px;
+      font-weight: 800;
+      color: #A85B5B;
+    }
+    
+    .nomad-rv-price-label {
+      font-size: 14px;
+      color: #71717a;
+      margin-top: 4px;
+    }
+    
+    .nomad-rv-link {
+      color: #6B4C4C;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    
+    .nomad-rv-link:hover {
+      color: #D4A574;
+    }
+    
+    .nomad-fleet-spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 20px;
+    }
+    
+    .nomad-fleet-spinner::after {
+      content: '';
+      width: 40px;
+      height: 40px;
+      border: 4px solid #E8DCC4;
+      border-top-color: #A85B5B;
+      border-radius: 50%;
+      animation: nomad-fleet-spin 0.8s linear infinite;
+    }
+    
+    @keyframes nomad-fleet-spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .nomad-fleet-error {
+      text-align: center;
+      padding: 40px 20px;
+      color: #ef4444;
+    }
+    
+    .nomad-fleet-error button {
+      margin-top: 16px;
+      padding: 12px 24px;
+      background: #A85B5B;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    
+    .nomad-fleet-error button:hover {
+      background: #D4A574;
+    }
+    
+    @media (max-width: 768px) {
+      .nomad-fleet-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .nomad-rv-specs {
+        grid-template-columns: 1fr;
+      }
+    }
+  `;
+  
+  // Inject styles
+  const styleSheet = document.createElement('style');
+  styleSheet.textContent = styles;
+  document.head.appendChild(styleSheet);
+  
+  // Mock data
+  const mockVehicles = [
+    {
+      id: 'rv-001',
+      name: 'Desert Cruiser',
+      image: 'https://via.placeholder.com/400x300/E8DCC4/6B4C4C?text=Class+A+RV',
+      description: 'Luxury Class A motorhome perfect for extended desert stays. Full kitchen, bathroom, and sleeping for 6.',
+      class: 'Class A',
+      sleeps: 6,
+      length: '35 ft',
+      year: 2023,
+      pricePerWeek: 2800
+    },
+    {
+      id: 'rv-002',
+      name: 'Playa Explorer',
+      image: 'https://via.placeholder.com/400x300/E8DCC4/6B4C4C?text=Class+C+RV',
+      description: 'Versatile Class C with excellent fuel economy. Comfortable for 4 with all essential amenities.',
+      class: 'Class C',
+      sleeps: 4,
+      length: '28 ft',
+      year: 2022,
+      pricePerWeek: 1800
+    },
+    {
+      id: 'rv-003',
+      name: 'Nomad Compact',
+      image: 'https://via.placeholder.com/400x300/E8DCC4/6B4C4C?text=Class+B+Van',
+      description: 'Nimble Class B van conversion. Perfect for couples who want easy parking and maneuverability.',
+      class: 'Class B',
+      sleeps: 2,
+      length: '21 ft',
+      year: 2024,
+      pricePerWeek: 1200
+    },
+    {
+      id: 'rv-004',
+      name: 'Family Hauler',
+      image: 'https://via.placeholder.com/400x300/E8DCC4/6B4C4C?text=Large+Class+A',
+      description: 'Spacious Class A with dual slide-outs. Multiple sleeping areas and ample storage for gear.',
+      class: 'Class A',
+      sleeps: 6,
+      length: '38 ft',
+      year: 2023,
+      pricePerWeek: 2500
+    },
+    {
+      id: 'rv-005',
+      name: 'Adventure Seeker',
+      image: 'https://via.placeholder.com/400x300/E8DCC4/6B4C4C?text=Travel+Trailer',
+      description: 'Lightweight travel trailer, perfect for those with their own tow vehicle. Easy to set up.',
+      class: 'Travel Trailer',
+      sleeps: 4,
+      length: '24 ft',
+      year: 2022,
+      pricePerWeek: 1500
+    },
+    {
+      id: 'rv-006',
+      name: 'Cozy Camper',
+      image: 'https://via.placeholder.com/400x300/E8DCC4/6B4C4C?text=Class+B',
+      description: 'Efficient Class B with smart storage solutions. Ideal for minimalist burners.',
+      class: 'Class B',
+      sleeps: 2,
+      length: '19 ft',
+      year: 2024,
+      pricePerWeek: 1000
+    }
+  ];
+  
+  function renderCard(rv) {
+    return `
+      <div class="nomad-rv-card">
+        <div class="nomad-rv-image" style="background-image: url('${rv.image}')"></div>
+        <div class="nomad-rv-content">
+          <h3 class="nomad-rv-name">${rv.name}</h3>
+          <span class="nomad-rv-sleep">Sleeps ${rv.sleeps}</span>
+          <p class="nomad-rv-description">${rv.description}</p>
+          <div class="nomad-rv-specs">
+            <div class="nomad-rv-spec">
+              <div class="nomad-rv-spec-label">Class</div>
+              <div class="nomad-rv-spec-value">${rv.class}</div>
+            </div>
+            <div class="nomad-rv-spec">
+              <div class="nomad-rv-spec-label">Length</div>
+              <div class="nomad-rv-spec-value">${rv.length}</div>
+            </div>
+            <div class="nomad-rv-spec">
+              <div class="nomad-rv-spec-label">Year</div>
+              <div class="nomad-rv-spec-value">${rv.year}</div>
+            </div>
+            <div class="nomad-rv-spec">
+              <div class="nomad-rv-spec-label">Sleeps</div>
+              <div class="nomad-rv-spec-value">${rv.sleeps} people</div>
+            </div>
+          </div>
+          <div class="nomad-rv-footer">
+            <div>
+              <div class="nomad-rv-price">$${rv.pricePerWeek.toLocaleString()}</div>
+              <div class="nomad-rv-price-label">per week</div>
+            </div>
+            <a href="#fleet" class="nomad-rv-link">View Details →</a>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  
+  function renderFleet(vehicles) {
+    const container = document.getElementById('nomad-fleet-widget');
+    if (!container) return;
+    
+    const html = `
+      <div class="nomad-fleet-widget">
+        <div class="nomad-fleet-grid">
+          ${vehicles.map(renderCard).join('')}
+        </div>
+      </div>
+    `;
+    
+    container.innerHTML = html;
+  }
+  
+  function showLoading() {
+    const container = document.getElementById('nomad-fleet-widget');
+    if (!container) return;
+    container.innerHTML = '<div class="nomad-fleet-spinner"></div>';
+  }
+  
+  function showError(message) {
+    const container = document.getElementById('nomad-fleet-widget');
+    if (!container) return;
+    container.innerHTML = `
+      <div class="nomad-fleet-error">
+        <p>${message}</p>
+        <button onclick="window.location.reload()">Retry</button>
+      </div>
+    `;
+  }
+  
+  // Initialize
+  function initFleet() {
+    showLoading();
+    
+    setTimeout(() => {
+      try {
+        renderFleet(mockVehicles);
+      } catch (error) {
+        showError('Unable to load fleet. Please try again.');
+      }
+    }, 500);
+  }
+  
+  // Auto-initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFleet);
+  } else {
+    initFleet();
+  }
+})();
+  </script>
   <script>
     // Lightweight client-side handler for the lead form
     (function(){

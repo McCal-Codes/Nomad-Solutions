@@ -5,7 +5,7 @@
   const styles = `
     .nomad-availability-widget {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #ffffff;
+      background: #E8DCC4;
       border-radius: 16px;
       padding: 24px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -31,7 +31,7 @@
       font-size: 22px;
       font-weight: 600;
       margin: 0 0 4px 0;
-      color: #1a1a1a;
+      color: #6B4C4C;
     }
     
     .nomad-availability-widget.dark .nomad-availability-header-left h3 {
@@ -72,7 +72,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(0, 0, 0, 0.04);
+      background: #F5EFE6;
       border-radius: 10px;
       padding: 16px;
       margin-bottom: 12px;
@@ -80,7 +80,7 @@
     }
     
     .nomad-availability-item:hover {
-      background: rgba(0, 0, 0, 0.06);
+      background: #E8DCC4;
       transform: translateX(4px);
     }
     
@@ -95,7 +95,7 @@
     .nomad-availability-name {
       font-weight: 600;
       font-size: 15px;
-      color: #1a1a1a;
+      color: #6B4C4C;
     }
     
     .nomad-availability-widget.dark .nomad-availability-name {
@@ -111,8 +111,8 @@
     }
     
     .nomad-availability-status.available {
-      background: #d1fae5;
-      color: #065f46;
+      background: #D4A574;
+      color: #6B4C4C;
     }
     
     .nomad-availability-widget.dark .nomad-availability-status.available {
@@ -121,8 +121,8 @@
     }
     
     .nomad-availability-status.limited {
-      background: #fef3c7;
-      color: #92400e;
+      background: #E8DCC4;
+      color: #6B4C4C;
     }
     
     .nomad-availability-widget.dark .nomad-availability-status.limited {
@@ -131,8 +131,8 @@
     }
     
     .nomad-availability-status.booked {
-      background: #fee2e2;
-      color: #991b1b;
+      background: #A85B5B;
+      color: #F5EFE6;
     }
     
     .nomad-availability-widget.dark .nomad-availability-status.booked {
@@ -149,6 +149,78 @@
     
     .nomad-availability-widget.dark .nomad-availability-loading {
       color: rgba(255, 255, 255, 0.6);
+    }
+
+    .nomad-availability-spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(0, 0, 0, 0.1);
+      border-top-color: #A85B5B;
+      border-radius: 50%;
+      animation: nomad-spin 0.8s linear infinite;
+      margin-bottom: 12px;
+    }
+
+    .nomad-availability-widget.dark .nomad-availability-spinner {
+      border-color: rgba(255, 255, 255, 0.1);
+      border-top-color: #f59e0b;
+    }
+
+    @keyframes nomad-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .nomad-availability-error {
+      text-align: center;
+      padding: 32px;
+      color: #991b1b;
+      background: #fee2e2;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+
+    .nomad-availability-widget.dark .nomad-availability-error {
+      color: #fca5a5;
+      background: rgba(239, 68, 68, 0.2);
+    }
+
+    .nomad-availability-error-title {
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+
+    .nomad-availability-error-message {
+      font-size: 14px;
+      margin-bottom: 16px;
+      opacity: 0.9;
+    }
+
+    .nomad-availability-retry {
+      background: #d97706;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nomad-availability-retry:hover {
+      background: #b45309;
+      transform: translateY(-1px);
+    }
+
+    .nomad-availability-widget.dark .nomad-availability-retry {
+      background: #f59e0b;
+      color: #111827;
+    }
+
+    .nomad-availability-widget.dark .nomad-availability-retry:hover {
+      background: #fbbf24;
     }
     
     .nomad-availability-note {
@@ -239,7 +311,10 @@
         </div>
         <span class="nomad-availability-badge">Real-time</span>
       </div>
-      <div class="nomad-availability-loading">Checking availability...</div>
+      <div class="nomad-availability-loading">
+        <div class="nomad-availability-spinner"></div>
+        <div>Checking availability...</div>
+      </div>
     `;
     
     container.appendChild(widgetDiv);
@@ -267,20 +342,32 @@
           clearTimeout(timer);
           var data = json && (json.availability || json.data || json) || fallbackData;
           dlog(container, 'Fetched availability from '+apiUrl);
-          displayData(widgetDiv, data);
+          displayData(widgetDiv, data, false);
         })
         .catch(function(err) {
           clearTimeout(timer);
-          dlog(container, 'Fetch failed ('+(err && err.message ? err.message : 'error')+') — using fallback data');
-          displayData(widgetDiv, fallbackData);
+          var isTimeout = timedOut || (err && err.name === 'AbortError');
+          var errMsg = isTimeout ? 'Request timed out' : (err && err.message ? err.message : 'Network error');
+          dlog(container, 'Fetch failed ('+errMsg+') — using fallback data');
+          displayData(widgetDiv, fallbackData, true, errMsg, apiUrl, options);
         });
     }, 200);
   }
   
-  function displayData(widgetDiv, data) {
+  function displayData(widgetDiv, data, isError, errorMsg, apiUrl, options) {
     const loadingEl = widgetDiv.querySelector('.nomad-availability-loading');
     
-    let html = '<ul class="nomad-availability-list">';
+    let html = '';
+    
+    if (isError) {
+      html += '<div class="nomad-availability-error">';
+      html += '<div class="nomad-availability-error-title">⚠️ Connection Issue</div>';
+      html += '<div class="nomad-availability-error-message">' + errorMsg + '. Showing cached availability data.</div>';
+      html += '<button class="nomad-availability-retry" onclick="window.NomadAvailabilityWidget._retry(this)">Retry Connection</button>';
+      html += '</div>';
+    }
+    
+    html += '<ul class="nomad-availability-list">';
     data.forEach(function(item) {
       const statusText = item.status === 'booked' && item.nextOpen 
         ? 'Booked — open ' + item.nextOpen 
@@ -297,6 +384,13 @@
     html += '<p class="nomad-availability-note">Updated in real-time • Book early for best selection</p>';
     
     loadingEl.outerHTML = html;
+    
+    // Store retry info
+    if (isError) {
+      try {
+        widgetDiv._retryData = { apiUrl: apiUrl, options: options };
+      } catch(_) {}
+    }
   }
   
   // Initialize
@@ -386,7 +480,55 @@
       }
     },
     scan: function(){ init(); },
-    debug: false
+    debug: false,
+    _retry: function(btn) {
+      try {
+        const widgetDiv = btn.closest('.nomad-availability-widget');
+        if (!widgetDiv || !widgetDiv._retryData) return;
+        
+        // Remove error and show loading
+        const errorEl = widgetDiv.querySelector('.nomad-availability-error');
+        if (errorEl) {
+          errorEl.outerHTML = '<div class="nomad-availability-loading"><div class="nomad-availability-spinner"></div><div>Retrying connection...</div></div>';
+        }
+        
+        // Retry fetch
+        const data = widgetDiv._retryData;
+        const apiUrl = data.apiUrl || getDefaultApiUrl();
+        const options = data.options || {};
+        const container = widgetDiv.parentElement;
+        
+        setTimeout(function() {
+          let fallbackData = getAvailabilityData();
+          var controller = null;
+          var timedOut = false;
+          try { controller = new AbortController(); } catch(_) {}
+          var timer = setTimeout(function(){
+            timedOut = true;
+            try { controller && controller.abort(); } catch(_) {}
+          }, 5000);
+
+          fetch(apiUrl, controller ? { signal: controller.signal } : undefined)
+            .then(function(res) {
+              if (!res.ok) throw new Error('HTTP '+res.status);
+              return res.json();
+            })
+            .then(function(json) {
+              clearTimeout(timer);
+              var dataRes = json && (json.availability || json.data || json) || fallbackData;
+              displayData(widgetDiv, dataRes, false);
+            })
+            .catch(function(err) {
+              clearTimeout(timer);
+              var isTimeout = timedOut || (err && err.name === 'AbortError');
+              var errMsg = isTimeout ? 'Request timed out' : (err && err.message ? err.message : 'Network error');
+              displayData(widgetDiv, fallbackData, true, errMsg, apiUrl, options);
+            });
+        }, 200);
+      } catch(e) {
+        console.error('Retry failed:', e);
+      }
+    }
   };
   
   // Auto-init on DOM ready

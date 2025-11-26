@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Fleet - Nomad Solutions</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.65;
+      color: #6B4C4C;
+      background: #F5EFE6;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 96px 24px;
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: #6B4C4C;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    
+    .section-subtitle {
+      text-align: center;
+      font-size: clamp(16px, 2vw, 20px);
+      color: #52525b;
+      margin-bottom: 64px;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 64px 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 48px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Fleet Section -->
+  <section class="container" id="fleet">
+    <h2 class="section-title">Our Fleet</h2>
+    <p class="section-subtitle">Choose from our selection of well-maintained, playa-ready vehicles</p>
+    <div id="nomad-fleet-widget"></div>
+  </section>
+
+  <!-- Load Fleet Widget -->
+  <script src="./widgets/fleet/fleet-widget-simple.js"></script>
+</body>
+</html>
